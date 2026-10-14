@@ -19,8 +19,8 @@
     "url": "git+https://github.com/AnnMyroshnichenko/playwright-automation.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Daria Yurchenko, Anna Myroshnichenko, Mykyta Danylchenko, Oleh Olynskyi",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/AnnMyroshnichenko/playwright-automation/issues"
   },
