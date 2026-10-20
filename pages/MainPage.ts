@@ -1,8 +1,8 @@
 import { Locator,Page } from '@playwright/test';
 import { BasePage } from './BasePage';
-import { Footer} from './components/Footer';
+import { Footer} from './components/Footer-component';
 
-export class MainPage extends BasePage{
+export class MainPage extends BasePage {
     public readonly footer: Footer;
     protected readonly url = "/"
 
@@ -79,5 +79,4 @@ export class MainPage extends BasePage{
         await this.searchField.fill(item);
         await this.searchField.press('Enter');
     }
-
 }

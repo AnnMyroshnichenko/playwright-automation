@@ -1,4 +1,4 @@
-import {  Locator, Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 
 export class Header {
     protected readonly page: Page;
@@ -113,7 +113,4 @@ export class Header {
     async clickPlaceAnAd(): Promise<void> {
         await this.placeAd.click();
     }
-
-
-
 }

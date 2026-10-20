@@ -1,4 +1,4 @@
-import {  Locator, Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 
 export class LoginForm {
     protected readonly page: Page;
@@ -85,6 +85,4 @@ export class LoginForm {
     async clickRegisterBtn(): Promise<void> {
         await this.registerationBtn.click();
     }
-
-
 }

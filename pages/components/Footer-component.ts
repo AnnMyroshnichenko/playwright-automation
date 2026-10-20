@@ -1,4 +1,4 @@
-import {  Locator, Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 
 export class Footer {
     protected readonly page: Page;
@@ -51,7 +51,6 @@ export class Footer {
         return this.page.getByTestId('logo').last();
     }
 
-
     async fillConsultationForm(name: string, mobile: string): Promise<void> {
         await this.nameField.fill(name);
         await this.mobileField.fill(mobile);
@@ -60,5 +59,4 @@ export class Footer {
     async clickRequestConsultationBtn(): Promise<void> {
         await this.requestConsultationBtn.click();
     }
-
 }

@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
-import { Header } from './components/Header';
-import { LoginForm } from './components/LoginForm';
+import { Header } from './components/Header-component';
+import { LoginForm } from './components/LoginForm-component';
 
 export abstract class BasePage {
   protected readonly page: Page;
