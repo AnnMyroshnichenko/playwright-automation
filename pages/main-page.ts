@@ -1,6 +1,6 @@
 import { Locator,Page } from '@playwright/test';
-import { BasePage } from './BasePage';
-import { Footer} from './components/Footer-component';
+import { BasePage } from './base-page';
+import { Footer} from './components/footer-component';
 
 export class MainPage extends BasePage {
     public readonly footer: Footer;
