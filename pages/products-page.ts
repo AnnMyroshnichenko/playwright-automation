@@ -31,4 +31,18 @@ export class ProductsPage extends BasePage{
     public get warehouseCategory(): Locator { 
         return this.page.getByTestId('firstCategoryLabel').getByText('Складська техніка');
     }
+
+    public async selectCategory(category: string): Promise<void> {
+        const categoryLocator = this.page.getByTestId('firstCategoryLabel').getByText(category);
+        await categoryLocator.click();
+    }
+
+    public async selectSubcategory(subcategory: string): Promise<void> {
+        const subcategoryLocator = this.page.getByTestId('checkLabel').getByText(subcategory);
+        await subcategoryLocator.click();
+    }
+
+    public getSelectedFilter(filterTestId: string): Locator {
+        return this.resetFilters.locator('..').getByTestId(filterTestId);
+    }
 }
