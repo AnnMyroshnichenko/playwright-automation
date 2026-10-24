@@ -32,6 +32,34 @@ export class ProductsPage extends BasePage{
         return this.page.getByTestId('firstCategoryLabel').getByText('Складська техніка');
     }
 
+    public get minPriceInput(): Locator {
+        return this.page.getByTestId('input');
+    }
+
+    public get maxPriceInput(): Locator {
+        return this.page.getByTestId('input2');
+    }
+
+    public get resultsCount(): Locator {
+        return this.page.getByRole('heading', { name: /Знайдено \d+ оголошень?\s+на видимій території/ });
+    }
+
+    public get regionExpander(): Locator {
+        return this.page.getByText('Областi', { exact: true }).locator('..').getByTestId('filterCaption');
+    }
+    
+    public get allUkraineRegionCheckbox(): Locator {
+        return this.page.locator('#all');
+    }
+
+    regionCheckbox(region: string): Locator {
+        return this.page.getByTestId(region);
+    }
+
+    getSelectedFilter(filterTestId: string): Locator {
+        return this.resetFilters.locator('..').getByTestId(filterTestId);
+    }
+
     public async selectCategory(category: string): Promise<void> {
         const categoryLocator = this.page.getByTestId('firstCategoryLabel').getByText(category);
         await categoryLocator.click();
@@ -40,9 +68,5 @@ export class ProductsPage extends BasePage{
     public async selectSubcategory(subcategory: string): Promise<void> {
         const subcategoryLocator = this.page.getByTestId('checkLabel').getByText(subcategory);
         await subcategoryLocator.click();
-    }
-
-    public getSelectedFilter(filterTestId: string): Locator {
-        return this.resetFilters.locator('..').getByTestId(filterTestId);
     }
 }
