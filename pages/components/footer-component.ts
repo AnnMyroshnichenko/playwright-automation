@@ -16,7 +16,7 @@ export class Footer {
     }
 
     public get requestConsultationBtn(): Locator {
-        return this.page.getByRole('button', { name: 'Замовити консультацію'});
+        return this.page.getByRole('button', { name: 'Замовити консультацію' });
     }
 
     public get confidentialPolicy(): Locator {
@@ -38,15 +38,15 @@ export class Footer {
     public get tenders(): Locator {
         return this.page.getByTestId('tenderi');
     }
-    
+
     public get workRequests(): Locator {
         return this.page.getByTestId('zapiti-na-robotu');
     }
 
     public get email(): Locator {
-        return this.page.getByRole('link', { name: 'info@rentzila.com.ua'});
+        return this.page.getByRole('link', { name: 'info@rentzila.com.ua' });
     }
-    
+
     public get logo(): Locator {
         return this.page.getByTestId('logo').last();
     }

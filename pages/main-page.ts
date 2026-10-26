@@ -1,12 +1,12 @@
-import { Locator,Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import { BasePage } from './base-page';
-import { Footer} from './components/footer-component';
+import { Footer } from './components/footer-component';
 
 export class MainPage extends BasePage {
     public readonly footer: Footer;
     protected readonly url = "/"
 
-    constructor(page: Page ) {
+    constructor(page: Page) {
         super(page)
         this.footer = new Footer(page);
     }
@@ -78,5 +78,9 @@ export class MainPage extends BasePage {
     async searchForItemMainPage(item: string): Promise<void> {
         await this.searchField.fill(item);
         await this.searchField.press('Enter');
+    }
+
+    async clickShowOnMap(): Promise<void> {
+        await this.showOnMap.click({ button: 'left', force: true });
     }
 }
