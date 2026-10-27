@@ -1,12 +1,11 @@
-import { test, expect } from '@playwright/test';
-import { TendersPage } from '../pages/tenders-page';
+import { test, expect } from '../fixtures/test';
 
 test('C260: View and verify tenders in the list and card details', async ({
   page,
+  tendersPage,
 }) => {
-  const tendersPage = new TendersPage(page);
   await tendersPage.open();
-  await expect(page).toHaveURL(/.*tenders-map.*/);
+  await expect(page).toHaveURL(tendersPage.url);
 
   await expect(tendersPage.showListBtn).toBeVisible();
   await tendersPage.showListBtn.click();

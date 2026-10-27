@@ -2,7 +2,7 @@ import { Locator, Page } from '@playwright/test';
 import { BasePage } from './base-page';
 
 export class ProductsPage extends BasePage {
-  protected readonly url = '/products/';
+  public readonly url = process.env.PRODUCTS_URL!;
 
   constructor(page: Page) {
     super(page);

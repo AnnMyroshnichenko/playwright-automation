@@ -2,7 +2,7 @@ import { Locator, Page } from '@playwright/test';
 import { BasePage } from './base-page';
 
 export class TendersPage extends BasePage {
-  protected readonly url = '/tenders-map/';
+  public readonly url = process.env.TENDERS_URL!;
 
   constructor(page: Page) {
     super(page);
