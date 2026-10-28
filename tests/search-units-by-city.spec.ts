@@ -2,6 +2,14 @@ import { test, expect } from '../fixtures/products.fixture';
 import { cities, invalidCities } from '../test-data/cities';
 
 test.describe('TC C519: Search for units by city', () => {
+  test.beforeEach(async ({ mainPage, productsPage }) => {
+    await mainPage.open();
+    await expect(mainPage.showOnMap).toBeVisible();
+
+    await mainPage.clickShowOnMap();
+    await expect(productsPage.map).toBeVisible();
+  });
+
   test('should search units by city', async ({ productsPage }) => {
     await expect(productsPage.cityField).toBeVisible();
     await productsPage.cityField.click();
@@ -28,7 +36,7 @@ test.describe('TC C519: Search for units by city', () => {
     const citySuggestion = productsPage.getCitySuggestion(cities.kyiv);
 
     await expect(citySuggestion).toBeVisible();
-    await expect(productsPage.getCitySuggestion(cities.kyiv)).toBeVisible({
+    await expect(citySuggestion).toBeVisible({
       timeout: 15000,
     });
 

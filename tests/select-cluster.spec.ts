@@ -1,6 +1,14 @@
 import { test, expect } from '../fixtures/products.fixture';
 
 test.describe('TC C517: Select a cluster of units', () => {
+  test.beforeEach(async ({ mainPage, productsPage }) => {
+    await mainPage.open();
+    await expect(mainPage.showOnMap).toBeVisible();
+
+    await mainPage.clickShowOnMap();
+    await expect(productsPage.map).toBeVisible();
+  });
+
   test('should zoom into map clusters and display individual units', async ({
     productsPage,
   }) => {

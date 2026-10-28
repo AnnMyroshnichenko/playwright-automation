@@ -1,11 +1,16 @@
 import { test, expect } from '../fixtures/products.fixture';
-import { MainPage } from '../pages/main-page';
 import { searchKeywords, invalidKeywords } from '../test-data/search-keywords';
 
 test.describe('TC C518: Search for units by keyword', () => {
-  test('should search units by keyword', async ({ page, productsPage }) => {
-    const mainPage = new MainPage(page);
+  test.beforeEach(async ({ mainPage, productsPage }) => {
+    await mainPage.open();
+    await expect(mainPage.showOnMap).toBeVisible();
 
+    await mainPage.clickShowOnMap();
+    await expect(productsPage.map).toBeVisible();
+  });
+
+  test('should search units by keyword', async ({ mainPage, productsPage }) => {
     await expect(mainPage.searchField).toBeVisible();
     await mainPage.searchField.click();
     await mainPage.submitKeywordSearch();
