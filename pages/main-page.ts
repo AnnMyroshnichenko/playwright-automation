@@ -1,82 +1,108 @@
-import { Locator,Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import { BasePage } from './base-page';
-import { Footer} from './components/footer-component';
+import { Footer } from './components/footer-component';
 
 export class MainPage extends BasePage {
-    public readonly footer: Footer;
-    protected readonly url = "/"
+  public readonly footer: Footer;
+  protected readonly url = '/';
 
-    constructor(page: Page ) {
-        super(page)
-        this.footer = new Footer(page);
-    }
+  constructor(page: Page) {
+    super(page);
+    this.footer = new Footer(page);
+  }
 
-    public get searchField(): Locator {
-        return this.page.getByTestId('searchForm').last();
-    }
+  public get searchField(): Locator {
+    return this.page.getByTestId('searchForm').last().locator('input');
+  }
 
-    public get showOnMap(): Locator {
-        return this.page.getByTestId('mapButton');
-    }
+  public get showOnMap(): Locator {
+    return this.page.getByTestId('mapButton');
+  }
 
-    public get popularFilter(): Locator {
-        return this.page.getByTestId('services__populyarni');
-    }
+  public get popularFilter(): Locator {
+    return this.page.getByTestId('services__populyarni');
+  }
 
-    public get agriculturalFilter(): Locator {
-        return this.page.getByTestId('services__silskogospodarski');
-    }
+  public get agriculturalFilter(): Locator {
+    return this.page.getByTestId('services__silskogospodarski');
+  }
 
-    public get constructionFilter(): Locator {
-        return this.page.getByTestId('services__budivelni');
-    }
+  public get constructionFilter(): Locator {
+    return this.page.getByTestId('services__budivelni');
+  }
 
-    public get otherFilter(): Locator {
-        return this.page.getByTestId('services__inshi');
-    }
+  public get otherFilter(): Locator {
+    return this.page.getByTestId('services__inshi');
+  }
 
-    public get popularEquipmentFilter(): Locator {
-        return this.page.getByTestId('specialEquipment__populyarna');
-    }
+  public get popularEquipmentFilter(): Locator {
+    return this.page.getByTestId('specialEquipment__populyarna');
+  }
 
-    public get agriculturalEquipmentFilter(): Locator {
-        return this.page.getByTestId('specialEquipment__silskogospodarska');
-    }
+  public get agriculturalEquipmentFilter(): Locator {
+    return this.page.getByTestId('specialEquipment__silskogospodarska');
+  }
 
-    public get constructionEquipmentFilter(): Locator {
-        return this.page.getByTestId('specialEquipment__budivelna');
-    }
+  public get constructionEquipmentFilter(): Locator {
+    return this.page.getByTestId('specialEquipment__budivelna');
+  }
 
-    public get otherEquipmentFilter(): Locator {
-        return this.page.getByTestId('specialEquipment__insha');
-    }
+  public get otherEquipmentFilter(): Locator {
+    return this.page.getByTestId('specialEquipment__insha');
+  }
 
-    public get allPurposesUnderService(): Locator {
-        return this.page.getByTestId('services').locator('[class^="RentzilaProposes_proposes_item"]');
-    }
+  public get allPurposesUnderService(): Locator {
+    return this.page
+      .getByTestId('services')
+      .locator('[class^="RentzilaProposes_proposes_item"]');
+  }
 
-    public get allPurposesUnderEquipment(): Locator {
-        return this.page.getByTestId('specialEquipment').locator('[class^="RentzilaProposes_proposes_item"]');
-    }
+  public get allPurposesUnderEquipment(): Locator {
+    return this.page
+      .getByTestId('specialEquipment')
+      .locator('[class^="RentzilaProposes_proposes_item"]');
+  }
 
-    async clickServicesFilter(filter: Locator): Promise<void> {
-        await filter.click();
-    }
+  async clickServicesFilter(filter: Locator): Promise<void> {
+    await filter.click();
+  }
 
-    async clickEquipmentFilter(filter: Locator): Promise<void> {
-        await filter.click();
-    }
+  async clickEquipmentFilter(filter: Locator): Promise<void> {
+    await filter.click();
+  }
 
-    async clickPurposeServices(index: number): Promise<void> {
-        await this.allPurposesUnderService.nth(index).click();
-    }
+  async clickPurposeServices(index: number): Promise<void> {
+    await this.allPurposesUnderService.nth(index).click();
+  }
 
-    async clickPurposeEquipment(index: number): Promise<void> {
-        await this.allPurposesUnderEquipment.nth(index).click();
-    }
+  async clickPurposeEquipment(index: number): Promise<void> {
+    await this.allPurposesUnderEquipment.nth(index).click();
+  }
 
-    async searchForItemMainPage(item: string): Promise<void> {
-        await this.searchField.fill(item);
-        await this.searchField.press('Enter');
+  async searchForItemMainPage(item: string): Promise<void> {
+    await this.searchField.fill(item);
+    await this.searchField.press('Enter');
+  }
+
+  public async clickShowOnMap(): Promise<void> {
+    await this.showOnMap.click();
+  }
+
+  public async enterSearchKeyword(keyword: string): Promise<void> {
+    await this.searchField.fill(keyword);
+  }
+
+  public async submitKeywordSearch(): Promise<void> {
+    await this.searchField.press('Enter');
+  }
+
+  public async clearSearchField(): Promise<void> {
+    const clearSearchButton = this.searchField.locator('..').locator('button');
+
+    if ((await clearSearchButton.count()) > 0) {
+      await clearSearchButton.last().click();
+    } else {
+      await this.searchField.fill('');
     }
+  }
 }
