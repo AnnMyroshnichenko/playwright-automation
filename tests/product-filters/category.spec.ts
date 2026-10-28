@@ -4,10 +4,20 @@ import {categories} from '../../test-data/categories';
 test.describe('C547 Filtering by category', () => {
   test.beforeEach(async ({ mainPage, productsPage }) => {
     await mainPage.open();
+    await mainPage.closeTenderPopup();
     await expect(mainPage.showOnMap).toBeVisible();
     await mainPage.showOnMap.click();
     await expect(productsPage.map).toBeVisible({ timeout: 10000 });
   });
+
+  for(const category of categories) {
+    test(`should filter products by category: ${category.name}`, async ({ productsPage }) => {
+      await productsPage.selectCategory(category.name);
+      await expect(productsPage.getSelectedFilter(category.filterTestId)).toBeVisible();
+      await productsPage.resetFilters.click();
+      await expect(productsPage.getSelectedFilter(category.filterTestId)).toHaveCount(0);
+    });
+  }
 
   for (const category of categories) {
     for (const subcategory of category.subcategories || []) {

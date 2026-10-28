@@ -59,6 +59,20 @@ export class MainPage extends BasePage {
         return this.page.getByTestId('specialEquipment').locator('[class^="RentzilaProposes_proposes_item"]');
     }
 
+    public get tenderPopup(): Locator {
+        return this.page.getByTestId('completeTenderRectangle');
+    }
+
+    public get tenderPopupCloseButton(): Locator {
+        return this.tenderPopup.getByTestId('crossButton');
+    }
+
+    async closeTenderPopup(): Promise<void> {
+        if (await this.tenderPopup.isVisible()) {
+            await this.tenderPopupCloseButton.click();
+        }
+    }
+
     async clickServicesFilter(filter: Locator): Promise<void> {
         await filter.click();
     }

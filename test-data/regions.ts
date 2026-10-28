@@ -25,3 +25,7 @@ export const regions = [
   'Чернівецька область',
   'Чернігівська область',
 ];
+
+export const regionPairs = [
+  {region1: 'Вінницька область', region2: 'Донецька область'},
+];
