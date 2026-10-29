@@ -3,7 +3,7 @@ import { Locator, Page } from '@playwright/test';
 export class Header {
     protected readonly page: Page;
 
-    constructor(page: Page)  {      
+    constructor(page: Page) {
         this.page = page;
     }
 
@@ -12,28 +12,49 @@ export class Header {
     }
 
     public get advertisement(): Locator {
-        return this.page.getByTestId('Navbar').getByRole('link', { name: 'Оголошення'});
+        return this.page.getByTestId('Navbar').getByRole('link', { name: 'Оголошення' });
     }
 
     public get jobApplications(): Locator {
-        return this.page.getByTestId('Navbar').getByRole('link', { name: 'Запити на роботу'});
+        return this.page.getByTestId('Navbar').getByRole('link', { name: 'Запити на роботу' });
     }
 
     public get tenders(): Locator {
-         return this.page.getByTestId('Navbar').getByRole('link', { name: 'Тендери'});
+        return this.page.getByTestId('Navbar').getByRole('link', { name: 'Тендери' });
     }
 
     public get placeAd(): Locator {
-        return this.page.getByTestId('Navbar').getByRole('link', { name: 'Подати оголошення'});
+        return this.page.getByTestId('Navbar').getByRole('link', { name: 'Подати оголошення' });
     }
 
     public get searchField(): Locator {
         return this.page.getByTestId('searchInput').first();
     }
 
+    public get searchDropdown(): Locator {
+        return this.page.getByTestId('searchDropdown');
+    }
+
     public get searchHistoryItems(): Locator {
         return this.page
             .locator('h6:text-is("Історія пошуку") + div')
+            .getByTestId('resultItem');
+    }
+
+    public get rightSideSearchResults(): Locator {
+        return this.page
+            .getByTestId('searchDropdown')
+            .getByTestId('rightsideUnits')
+            .getByTestId('cardContainer');
+    }
+
+    public get searchDropdownServices(): Locator {
+        return this.page.getByTestId('searchDropdown').getByTestId('services').getByTestId('resultItem');
+    }
+
+    public get searchDropdownCategories(): Locator {
+        return this.page
+            .locator('h6:text-is("Категорії") + div')
             .getByTestId('resultItem');
     }
 
@@ -46,7 +67,11 @@ export class Header {
     }
 
     public get catalogDropdown(): Locator {
-        return this.page.getByText('Каталог', { exact: true });
+        return this.page.locator('[class^="Navbar_containerBottom"]').getByText('Каталог', { exact: true });
+    }
+
+    public get catalogDropdownOpened(): Locator {
+        return this.page.locator('[class^="Catalog_container"]');
     }
 
     public get specMachineryCatalog(): Locator {
@@ -81,20 +106,23 @@ export class Header {
         return this.page.locator('[class^="Catalog_list"]').getByText('Інші');
     }
 
-    async clickLogo(): Promise<void> {
-        await this.logo.click();
+    public get catalogSubcategoriesList(): Locator {
+        return this.page.locator('[class*=Catalog_listSecond]');
     }
 
-    async openCatalogDropdown(): Promise<void> {
+    public get catalogSubcategoriesItems(): Locator {
+        return this.catalogSubcategoriesList.locator('[class^="CatalogItem_item"]');
+    }
+
+    public catalogCategory(name: string): Locator {
+        return this.catalogDropdownOpened.getByText(name, { exact: true });
+    }
+
+    public async openCategorySubmenu(sectionName: string, categoryName: string): Promise<void> {
         await this.catalogDropdown.click();
-    }
-
-    async clickAdvertisements(): Promise<void> {
-        await this.advertisement.click();
-    }
-
-    async clickTenders(): Promise<void> {
-        await this.tenders.click();
+        await this.catalogCategory(sectionName).hover();
+        await this.catalogCategory(categoryName).hover();
+        await this.catalogSubcategoriesItems.first().waitFor({ state: 'visible' });
     }
 
     async searchForItem(item: string): Promise<void> {
@@ -102,15 +130,23 @@ export class Header {
         await this.searchField.press('Enter');
     }
 
-    async clickSearchField(): Promise<void> {
+    async typeInSearchField(text: string): Promise<void> {
         await this.searchField.click();
+        await this.searchField.pressSequentially(text);
     }
 
-    async clickLogin(): Promise<void> {
-        await this.loginBtn.click();
+    async pressEnterInSearchField(): Promise<void> {
+        await this.searchField.click();
+        await this.searchField.press('Enter');
+
     }
 
-    async clickPlaceAnAd(): Promise<void> {
-        await this.placeAd.click();
+    public async goToMainPage(): Promise<void> {
+        await this.logo.click();
+        await this.page.waitForURL('/');
+    }
+
+    async clickCategory(categoryLocator: Locator): Promise<void> {
+        await categoryLocator.click();
     }
 }
