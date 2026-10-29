@@ -4,10 +4,10 @@ import {categories} from '../../test-data/categories';
 test.describe('C547 Filtering by category', () => {
   test.beforeEach(async ({ mainPage, productsPage }) => {
     await mainPage.open();
-    await mainPage.closeTenderPopup();
+    await mainPage.closePopup();
     await expect(mainPage.showOnMap).toBeVisible();
     await mainPage.showOnMap.click();
-    await expect(productsPage.map).toBeVisible({ timeout: 10000 });
+    await expect(productsPage.map).toBeVisible();
   });
 
   for(const category of categories) {

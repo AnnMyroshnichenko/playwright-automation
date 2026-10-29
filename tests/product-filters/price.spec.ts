@@ -5,10 +5,10 @@ import {resultCountLabel, zeroResultsCountLabel} from '../../test-data/results-c
 test.describe('C548 Filtering by price', () => {
     test.beforeEach(async ({ mainPage, productsPage }) => {
         await mainPage.open();
-        await mainPage.closeTenderPopup();
+        await mainPage.closePopup();
         await expect(mainPage.showOnMap).toBeVisible();
         await mainPage.showOnMap.click();
-        await expect(productsPage.map).toBeVisible({ timeout: 10000 });
+        await expect(productsPage.map).toBeVisible();
     });
 
     for (const range of priceRanges) {
