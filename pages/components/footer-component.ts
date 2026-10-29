@@ -55,8 +55,4 @@ export class Footer {
         await this.nameField.fill(name);
         await this.mobileField.fill(mobile);
     }
-
-    async clickRequestConsultationBtn(): Promise<void> {
-        await this.requestConsultationBtn.click();
-    }
 }

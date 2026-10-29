@@ -47,9 +47,6 @@ export class ProductsPage extends BasePage{
         return this.filtersPanel.getByText(name, { exact: true });
     }
 
-    async clickSwitchToMapBtn(): Promise<void> {
-        await this.showAsMapBtn.click();
-    }
     public categoryFilter(testId: string): Locator {
         return this.page.getByTestId(testId);
     }

@@ -119,31 +119,15 @@ export class Header {
     }
 
     public async openCategorySubmenu(sectionName: string, categoryName: string): Promise<void> {
-        await this.openCatalogDropdown();
+        await this.catalogDropdown.click();
         await this.catalogCategory(sectionName).hover();
         await this.catalogCategory(categoryName).hover();
         await this.catalogSubcategoriesItems.first().waitFor({ state: 'visible' });
     }
 
-    async openCatalogDropdown(): Promise<void> {
-        await this.catalogDropdown.click();
-    }
-
-    async clickAdvertisements(): Promise<void> {
-        await this.advertisement.click();
-    }
-
-    async clickTenders(): Promise<void> {
-        await this.tenders.click();
-    }
-
     async searchForItem(item: string): Promise<void> {
         await this.searchField.fill(item);
         await this.searchField.press('Enter');
-    }
-
-    async clickSearchField(): Promise<void> {
-        await this.searchField.click();
     }
 
     async typeInSearchField(text: string): Promise<void> {
@@ -152,21 +136,9 @@ export class Header {
     }
 
     async pressEnterInSearchField(): Promise<void> {
-        await this.clickSearchField();
+        await this.searchField.click();
         await this.searchField.press('Enter');
 
-    }
-
-    async clickLogin(): Promise<void> {
-        await this.loginBtn.click();
-    }
-
-    async clickPlaceAnAd(): Promise<void> {
-        await this.placeAd.click();
-    }
-
-    async hoverCategory(categoryLocator: Locator): Promise<void> {
-        await categoryLocator.hover();
     }
 
     public async goToMainPage(): Promise<void> {

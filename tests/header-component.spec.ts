@@ -7,18 +7,13 @@ import { categories } from '../test-data/categories';
 import { serviceCategories } from '../test-data/services';
 
 test.describe('Search field tests', () => {
-    let mainPage: MainPage;
-    let productsPage: ProductsPage;
 
-    test.beforeEach(async ({ page }) => {
-        mainPage = new MainPage(page);
-        productsPage = new ProductsPage(page);
-
+    test.beforeEach(async ({ mainPage}) => {
         await mainPage.open();
         await expect(mainPage.showOnMap).toBeVisible();
     });
 
-    test('C530 part 2. Verify Search Input.', async () => {
+    test('C530 part 2. Verify Search Input.', async ({ mainPage, productsPage }) => {
         await test.step('8. Search spaces inputs', async () => {
             const inputText = searchInputs.spaces;
             const expectedCount = searchInputs.expectedUnitsCount.step8
@@ -111,18 +106,12 @@ test.describe('Catalog tests', () => {
     const NOT_IN_CATALOG = ['Сільськогосподарська техніка'];
     const catalogCategories = categories.filter(c => !NOT_IN_CATALOG.includes(c.name));
 
-    let mainPage: MainPage;
-    let productsPage: ProductsPage;
-
-    test.beforeEach(async ({ page }) => {
-        mainPage = new MainPage(page);
-        productsPage = new ProductsPage(page);
-
+    test.beforeEach(async ({ mainPage }) => {
         await mainPage.open();
         await expect(mainPage.showOnMap).toBeVisible();
     });
 
-    async function verifySubcategories(stepNumber: number, categoryName: string): Promise<void> {
+    async function verifySubcategories(mainPage: MainPage, productsPage: ProductsPage, stepNumber: number, categoryName: string): Promise<void> {
         const subcategories = (findByName(categories, categoryName).subcategories ?? [])
             .filter(sub => !NOT_IN_CATALOG.includes(sub.name));
         expect(subcategories.length).toBeGreaterThan(0);
@@ -144,7 +133,7 @@ test.describe('Catalog tests', () => {
 
                 const item = mainPage.header.catalogSubcategoriesItems.nth(i);
                 await expect(item).toHaveText(sub.name);
-                await mainPage.header.clickCategory(item);
+                await item.click();
 
 
                 await expect.poll(() => productsPage.getUrl()).toContain(sub.url);
@@ -153,20 +142,20 @@ test.describe('Catalog tests', () => {
         }
     }
 
-    test('C559. part 1. Verify "Каталог"', async () => {
+    test('C559. part 1. Verify "Каталог"', async ({ mainPage, productsPage }) => {
         await test.step('1. "Каталог" button is displayed', async () => {
             await expect(mainPage.header.catalogDropdown).toBeVisible();
         });
 
         await test.step('2. Click on "Каталог"', async () => {
-            await mainPage.header.openCatalogDropdown();
+            await mainPage.header.catalogDropdown.click();
             await expect(mainPage.header.catalogDropdownOpened).toBeVisible();
             await expect(mainPage.header.specMachineryCatalog).toBeVisible();
             await expect(mainPage.header.servicesCatalog).toBeVisible();
         });
 
         await test.step('3. Hover "Спецтехніка"', async () => {
-            await mainPage.header.hoverCategory(mainPage.header.specMachineryCatalog);
+            await mainPage.header.specMachineryCatalog.hover();
             for (const c of catalogCategories) {
                 await expect(mainPage.header.catalogCategory(c.name)).toBeVisible();
             }
@@ -178,30 +167,31 @@ test.describe('Catalog tests', () => {
             await test.step(`${stepTitle} Click on "${category.name}"`, async () => {
                 if (i > 0) {
                     await mainPage.header.goToMainPage();
-                    await mainPage.header.openCatalogDropdown();
+                    await mainPage.header.catalogDropdown.click();
                     await expect(mainPage.header.catalogDropdownOpened).toBeVisible();
-                    await mainPage.header.hoverCategory(mainPage.header.catalogCategory(SPEC_MACHINERY));
+                    await mainPage.header.catalogCategory(SPEC_MACHINERY).hover();
                 }
 
-                await mainPage.header.clickCategory(mainPage.header.catalogCategory(category.name));
+                await mainPage.header.catalogCategory(category.name).click();
                 await expect(productsPage.map.mapWindow).toBeVisible();
                 await expect.poll(() => productsPage.getUrl()).toContain(category.url);
                 await expect(productsPage.categoryFilter(category.filterTestId)).toBeVisible();
             });
         }
     });
-    test('C559. part 2. Verify "Каталог"', async () => {
+
+    test('C559. part 2. Verify "Каталог"', async ({ mainPage, productsPage }) => {
         test.slow();
         await test.step('6. Verify "Будівельна техніка" subcategories', async () => {
-            await verifySubcategories(6, 'Будівельна техніка');
+            await verifySubcategories(mainPage, productsPage, 6, 'Будівельна техніка');
         });
 
         await test.step('7. "Каталог" and "Спецтехніка" open again', async () => {
             await mainPage.header.goToMainPage();
             await expect(mainPage.showOnMap).toBeVisible();
-            await mainPage.header.openCatalogDropdown();
+            await mainPage.header.catalogDropdown.click();
             await expect(mainPage.header.catalogDropdownOpened).toBeVisible();
-            await mainPage.header.hoverCategory(mainPage.header.catalogCategory(SPEC_MACHINERY));
+            await mainPage.header.catalogCategory(SPEC_MACHINERY).hover();
 
             for (const c of catalogCategories) {
                 await expect(mainPage.header.catalogCategory(c.name)).toBeVisible();
@@ -209,14 +199,14 @@ test.describe('Catalog tests', () => {
         });
 
         await test.step('8. Verify "Комунальна техніка" subcategories', async () => {
-            await verifySubcategories(8, 'Комунальна техніка');
+            await verifySubcategories(mainPage, productsPage, 8, 'Комунальна техніка');
         });
 
         await test.step('9. "Каталог" and "Спецтехніка" menu are open again', async () => {
             await mainPage.header.goToMainPage();
-            await mainPage.header.openCatalogDropdown();
+            await mainPage.header.catalogDropdown.click();
             await expect(mainPage.header.catalogDropdownOpened).toBeVisible();
-            await mainPage.header.hoverCategory(mainPage.header.catalogCategory(SPEC_MACHINERY));
+            await mainPage.header.catalogCategory(SPEC_MACHINERY).hover();
 
             for (const c of catalogCategories) {
                 await expect(mainPage.header.catalogCategory(c.name)).toBeVisible();
@@ -226,9 +216,9 @@ test.describe('Catalog tests', () => {
 
         await test.step('11. Hover the ""Спецтехніка"" label', async () => {
             await mainPage.header.goToMainPage();
-            await mainPage.header.openCatalogDropdown();
+            await mainPage.header.catalogDropdown.click();
             await expect(mainPage.header.catalogDropdownOpened).toBeVisible();
-            await mainPage.header.hoverCategory(mainPage.header.catalogCategory(SPEC_MACHINERY));
+            await mainPage.header.catalogCategory(SPEC_MACHINERY).hover();
 
             for (const c of catalogCategories) {
                 await expect(mainPage.header.catalogCategory(c.name)).toBeVisible();
@@ -236,19 +226,20 @@ test.describe('Catalog tests', () => {
         });
 
         await test.step('12. Verify "Складська техніка" subcategories', async () => {
-            await verifySubcategories(12, 'Складська техніка');
+            await verifySubcategories(mainPage, productsPage, 12, 'Складська техніка');
         });
     });
-    test('C559. part 3. Verify "Каталог"', async () => {
+
+    test('C559. part 3. Verify "Каталог"', async ({ mainPage, productsPage }) => {
         await test.step('13. "Каталог" open again', async () => {
             await mainPage.header.goToMainPage();
-            await mainPage.header.openCatalogDropdown();
+            await mainPage.header.catalogDropdown.click();
             await expect(mainPage.header.catalogDropdownOpened).toBeVisible();
             await expect(mainPage.header.servicesCatalog).toBeVisible();
         });
 
         await test.step('14. Hover "Послуги"', async () => {
-            await mainPage.header.hoverCategory(mainPage.header.servicesCatalog);
+            await mainPage.header.servicesCatalog.hover();
             for (const c of serviceCategories) {
                 await expect(mainPage.header.catalogCategory(c.name)).toBeVisible();
             }
@@ -256,7 +247,7 @@ test.describe('Catalog tests', () => {
 
         for (const [i, serviceCategory] of serviceCategories.entries()) {
             await test.step(`16.${i + 1} Hover "${serviceCategory.name}"`, async () => {
-                await mainPage.header.hoverCategory(mainPage.header.catalogCategory(serviceCategory.name));
+                await mainPage.header.catalogCategory(serviceCategory.name).hover();
                 await expect(mainPage.header.catalogSubcategoriesList).toBeVisible();
             });
         }
@@ -267,10 +258,9 @@ test.describe('Catalog tests', () => {
         const randomService = pickRandom(allServices);
 
         await test.step(`17. Click on a random service ("${randomService.name}")`, async () => {
-            await mainPage.header.hoverCategory(mainPage.header.catalogCategory(randomService.category));
-            await mainPage.header.clickCategory(
-                mainPage.header.catalogSubcategoriesList.getByText(randomService.name, { exact: true })
-            );
+            await mainPage.header.catalogCategory(randomService.category).hover();
+            await 
+                mainPage.header.catalogSubcategoriesList.getByText(randomService.name, { exact: true }).click();
 
             await expect(productsPage.map.mapWindow).toBeVisible();
             await expect(productsPage.categoryFilter(randomService.filterTestId)).toBeVisible();
@@ -288,9 +278,9 @@ test.describe('Catalog tests', () => {
 
             await test.step(`${reopenStep}. "Каталог" and "Послуги" menu are open again`, async () => {
                 await mainPage.header.goToMainPage();
-                await mainPage.header.openCatalogDropdown();
+                await mainPage.header.catalogDropdown.click();
                 await expect(mainPage.header.catalogDropdownOpened).toBeVisible();
-                await mainPage.header.hoverCategory(mainPage.header.catalogCategory(SERVICES));
+                await mainPage.header.catalogCategory(SERVICES).hover();
 
                 for (const c of serviceCategories) {
                     await expect(mainPage.header.catalogCategory(c.name)).toBeVisible();
@@ -298,14 +288,12 @@ test.describe('Catalog tests', () => {
             });
 
             await test.step(`${hoverStep}. Hover "${check.category}"`, async () => {
-                await mainPage.header.hoverCategory(mainPage.header.catalogCategory(check.category));
+                await mainPage.header.catalogCategory(check.category).hover();
                 await expect(mainPage.header.catalogSubcategoriesList).toBeVisible();
             });
 
             await test.step(`${clickStep}. Click on "${service.name}"`, async () => {
-                await mainPage.header.clickCategory(
-                    mainPage.header.catalogSubcategoriesList.getByText(service.name, { exact: true })
-                );
+                await mainPage.header.catalogSubcategoriesList.getByText(service.name, { exact: true }).click();
 
                 await expect(productsPage.map.mapWindow).toBeVisible();
                 await expect(productsPage.categoryFilter(service.filterTestId)).toBeVisible();

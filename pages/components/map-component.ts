@@ -33,10 +33,6 @@ export class MapComponent {
         return this.root.locator('.leaflet-marker-icon');
     }
 
-    async clickShowAsListBtn(): Promise<void> {
-        await this.showAsListBtn.click();
-    }
-
     public async getRegionWidth(): Promise<number> {
         const box = await this.regions.first().boundingBox();
         if (!box) {

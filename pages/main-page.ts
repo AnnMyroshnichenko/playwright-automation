@@ -59,14 +59,6 @@ export class MainPage extends BasePage {
         return this.page.getByTestId('specialEquipment').locator('[class^="RentzilaProposes_proposes_item"]');
     }
 
-    async clickServicesFilter(filter: Locator): Promise<void> {
-        await filter.click();
-    }
-
-    async clickEquipmentFilter(filter: Locator): Promise<void> {
-        await filter.click();
-    }
-
     async clickPurposeServices(index: number): Promise<void> {
         await this.allPurposesUnderService.nth(index).click();
     }
@@ -78,9 +70,5 @@ export class MainPage extends BasePage {
     async searchForItemMainPage(item: string): Promise<void> {
         await this.searchField.fill(item);
         await this.searchField.press('Enter');
-    }
-
-    async clickShowOnMap(): Promise<void> {
-        await this.showOnMap.click({ button: 'left', force: true });
     }
 }
