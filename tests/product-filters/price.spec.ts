@@ -5,7 +5,6 @@ import {resultCountLabel, zeroResultsCountLabel} from '../../test-data/results-c
 test.describe('C548 Filtering by price', () => {
     test.beforeEach(async ({ mainPage, productsPage }) => {
         await mainPage.open();
-        await mainPage.closePopup();
         await expect(mainPage.showOnMap).toBeVisible();
         await mainPage.showOnMap.click();
         await expect(productsPage.map).toBeVisible();

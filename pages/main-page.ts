@@ -59,20 +59,6 @@ export class MainPage extends BasePage {
         return this.page.getByTestId('specialEquipment').locator('[class^="RentzilaProposes_proposes_item"]');
     }
 
-    public get popup(): Locator {
-        return this.page.getByTestId('completeTenderRectangle');
-    }
-
-    public get popupCloseButton(): Locator {
-        return this.popup.getByTestId('crossButton');
-    }
-
-    async closePopup(): Promise<void> {
-        if (await this.popup.isVisible()) {
-            await this.popupCloseButton.click();
-        }
-    }
-
     async clickServicesFilter(filter: Locator): Promise<void> {
         await filter.click();
     }

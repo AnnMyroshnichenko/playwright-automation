@@ -5,7 +5,6 @@ import {resultCountLabel} from '../../test-data/results-count';
 test.describe('C549 Filtering by region', () => {
     test.beforeEach(async ({ mainPage, productsPage }) => {
         await mainPage.open();
-        await mainPage.closePopup();
         await expect(mainPage.showOnMap).toBeVisible();
         await mainPage.showOnMap.click();
         await expect(productsPage.map).toBeVisible();
