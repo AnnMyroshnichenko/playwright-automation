@@ -99,8 +99,20 @@ export class MainPage extends BasePage {
     await filter.click();
   }
 
-  async clickCategory(category: string): Promise<void> {
-    await this.page.getByTestId(`category__${category}`).click();
+  async clickServicesTab(tabId: string): Promise<void> {
+    await this.page.getByTestId(tabId).click();
+  }
+
+  async clickServiceCategory(serviceId: string): Promise<void> {
+    await this.page.getByTestId(serviceId).click();
+  }
+
+  async clickEquipmentTab(tabId: string): Promise<void> {
+    await this.page.getByTestId(tabId).click();
+  }
+
+  async clickEquipmentCategory(categoryId: string) {
+    await this.page.getByTestId(categoryId).click();
   }
 
   async clickPurposeServices(index: number): Promise<void> {

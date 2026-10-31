@@ -16,6 +16,10 @@ export class ProductsPage extends BasePage {
     return this.page.getByRole('button', { name: 'Показати список' });
   }
 
+  getFilter(filterId: string) {
+    return this.page.getByTestId(filterId);
+  }
+
   public get resetFilters(): Locator {
     return this.page.getByTestId('resetFilters');
   }
@@ -36,5 +40,9 @@ export class ProductsPage extends BasePage {
     return this.page
       .getByTestId('firstCategoryLabel')
       .getByText('Складська техніка');
+  }
+
+  async getUrl(): Promise<string> {
+    return this.page.url();
   }
 }
