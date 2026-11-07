@@ -39,34 +39,6 @@ export class MainPage extends BasePage {
     return this.page.getByTestId('specialEquipment__populyarna');
   }
 
-  public get seedDrillEquipment(): Locator {
-    return this.page.getByTestId('category__sivalki');
-  }
-
-  public get tractorEquipment(): Locator {
-    return this.page.getByTestId('category__traktori');
-  }
-
-  public get sprayerEquipment(): Locator {
-    return this.page.getByTestId('category__obpriskuvachi');
-  }
-
-  public get excavatorEquipment(): Locator {
-    return this.page.getByTestId('category__ekskavatori');
-  }
-
-  public get loaderEquipment(): Locator {
-    return this.page.getByTestId('category__navantazhuvachi');
-  }
-
-  public get lifterEquipment(): Locator {
-    return this.page.getByTestId('category__pidiomniki');
-  }
-
-  public get municipalMachineEquipment(): Locator {
-    return this.page.getByTestId('category__komunalni-mashini');
-  }
-
   public get agriculturalEquipmentFilter(): Locator {
     return this.page.getByTestId('specialEquipment__silskogospodarska');
   }

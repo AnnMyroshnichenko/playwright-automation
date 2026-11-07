@@ -12,47 +12,59 @@ export interface EquipmentTab {
   items: EquipmentItem[];
 }
 
+const tractorItem: EquipmentItem = {
+  name: 'Traktori',
+  categoryId: 'category__traktori',
+  filterId: 'traktori',
+  url: '/products/traktori/',
+};
+
+const sivalkiItem: EquipmentItem = {
+  name: 'Sivalki',
+  categoryId: 'category__sivalki',
+  filterId: 'posivna-ta-sadilna-tekhnika',
+  url: '/products/posivna-ta-sadilna-tekhnika/',
+};
+
+const ekskavatoriItem: EquipmentItem = {
+  name: 'Ekskavatori',
+  categoryId: 'category__ekskavatori',
+  filterId: 'ekskavatori',
+  url: '/products/ekskavatori/',
+};
+
+const navantazhuvachiItem: EquipmentItem = {
+  name: 'Navantazhuvachi',
+  categoryId: 'category__navantazhuvachi',
+  filterId: 'navantazhuvachi',
+  url: '/products/navantazhuvachi/',
+};
+
+const pidiomnikiItem: EquipmentItem = {
+  name: 'Pidiomniki',
+  categoryId: 'category__pidiomniki',
+  filterId: 'pidiomniki',
+  url: '/products/pidiomniki/',
+};
+
+const obpriskuvachiItem: EquipmentItem = {
+  name: 'Obpriskuvachi',
+  categoryId: 'category__obpriskuvachi',
+  filterId: 'tekhnika-dlya-polivu-ta-zroshennya',
+  url: '/products/tekhnika-dlya-polivu-ta-zroshennia/',
+};
+
 export const equipmentTabs: EquipmentTab[] = [
   {
     tabName: 'Popular',
     tabId: 'specialEquipment__populyarna',
     items: [
-      {
-        name: 'Sivalki',
-        categoryId: 'category__sivalki',
-        filterId: 'posivna-ta-sadilna-tekhnika',
-        url: '/products/posivna-ta-sadilna-tekhnika/',
-      },
-      {
-        name: 'Traktori',
-        categoryId: 'category__traktori',
-        filterId: 'traktori',
-        url: '/products/traktori/',
-      },
-      {
-        name: 'Obpriskuvachi',
-        categoryId: 'category__obpriskuvachi',
-        filterId: 'tekhnika-dlya-polivu-ta-zroshennya',
-        url: '/products/tekhnika-dlya-polivu-ta-zroshennia/',
-      },
-      {
-        name: 'Ekskavatori',
-        categoryId: 'category__ekskavatori',
-        filterId: 'ekskavatori',
-        url: '/products/ekskavatori/',
-      },
-      {
-        name: 'Navantazhuvachi',
-        categoryId: 'category__navantazhuvachi',
-        filterId: 'navantazhuvachi',
-        url: '/products/navantazhuvachi/',
-      },
-      {
-        name: 'Pidiomniki',
-        categoryId: 'category__pidiomniki',
-        filterId: 'pidiomniki',
-        url: '/products/pidiomniki/',
-      },
+      sivalkiItem,
+      tractorItem,
+      obpriskuvachiItem,
+      ekskavatoriItem,
+      navantazhuvachiItem,
+      pidiomnikiItem,
       {
         name: 'Komunalni Mashini',
         categoryId: 'category__komunalni-mashini',
@@ -65,12 +77,7 @@ export const equipmentTabs: EquipmentTab[] = [
     tabName: 'Agricultural',
     tabId: 'specialEquipment__silskogospodarska',
     items: [
-      {
-        name: 'Traktori',
-        categoryId: 'category__traktori',
-        filterId: 'traktori',
-        url: '/products/traktori/',
-      },
+      tractorItem,
       {
         name: 'Zhatki',
         categoryId: 'category__zhatki',
@@ -83,18 +90,8 @@ export const equipmentTabs: EquipmentTab[] = [
         filterId: 'kombaini',
         url: '/products/kombaini/',
       },
-      {
-        name: 'Sivalki',
-        categoryId: 'category__sivalki',
-        filterId: 'posivna-ta-sadilna-tekhnika',
-        url: '/products/posivna-ta-sadilna-tekhnika/',
-      },
-      {
-        name: 'Obpriskuvachi',
-        categoryId: 'category__obpriskuvachi',
-        filterId: 'tekhnika-dlya-polivu-ta-zroshennya',
-        url: '/products/tekhnika-dlya-polivu-ta-zroshennia/',
-      },
+      sivalkiItem,
+      obpriskuvachiItem,
       {
         name: 'Droni',
         categoryId: 'category__droni',
@@ -113,37 +110,22 @@ export const equipmentTabs: EquipmentTab[] = [
     tabName: 'Building',
     tabId: 'specialEquipment__budivelna',
     items: [
-      {
-        name: 'Ekskavatori',
-        categoryId: 'category__ekskavatori',
-        filterId: 'ekskavatori',
-        url: '/products/ekskavatori/',
-      },
+      ekskavatoriItem,
       {
         name: 'Avtokrani',
         categoryId: 'category__avtokrani',
-        filterId: 'avtokrani', //missing
+        filterId: 'avtokrani',
         url: '/products/avtokrani/',
         skipFilterCheck: true,
       },
-      {
-        name: 'Navantazhuvachi',
-        categoryId: 'category__navantazhuvachi',
-        filterId: 'navantazhuvachi',
-        url: '/products/navantazhuvachi/',
-      },
+      navantazhuvachiItem,
       {
         name: 'Katki',
         categoryId: 'category__katki',
         filterId: 'katki',
         url: '/products/katki/',
       },
-      {
-        name: 'Pidiomniki',
-        categoryId: 'category__pidiomniki',
-        filterId: 'pidiomniki',
-        url: '/products/pidiomniki/',
-      },
+      pidiomnikiItem,
       {
         name: 'Tekhnika dlya zemlyanikh robit',
         categoryId: 'category__tekhnika-dlya-zemlyanikh-robit',
@@ -195,7 +177,7 @@ export const equipmentTabs: EquipmentTab[] = [
       {
         name: 'Skladska tekhnika',
         categoryId: 'category__skladska-tekhnika',
-        filterId: 'obladnannia-dlya-navantazhuvachiv', //missing
+        filterId: 'obladnannia-dlya-navantazhuvachiv',
         url: '/products/obladnannia-dlya-navantazhuvachiv/',
         skipFilterCheck: true,
       },
