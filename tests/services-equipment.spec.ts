@@ -4,11 +4,6 @@ import { equipmentTabs } from '../test-data/equipment-items';
 
 test.describe('C212 & C213: Services and Equipment Navigation', () => {
   test.describe('C212: Services Navigation and Filters', () => {
-    test.skip(
-      ({ browserName }) => browserName !== 'webkit',
-      'Running exclusively on WebKit due to staging environment timing limits',
-    );
-
     test.describe.configure({ retries: 5 });
 
     test.beforeEach(async ({ mainPage }) => {
