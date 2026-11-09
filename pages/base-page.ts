@@ -8,7 +8,6 @@ export abstract class BasePage {
   protected abstract readonly url: string;
   public readonly loginForm: LoginForm;
 
-
   protected constructor(page: Page) {
     this.page = page;
     this.header = new Header(page);
