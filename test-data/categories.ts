@@ -1,10 +1,10 @@
-interface CategoryData{
+interface CategoryData {
     name: string;
     filterTestId: string;
     subcategories?: SubcategoryData[];
 }
 
-interface SubcategoryData{
+interface SubcategoryData {
     name: string;
     filterTestId: string;
 }
@@ -16,49 +16,49 @@ export const categories: CategoryData[] = [
         subcategories: [
             {
                 name: 'Бурові установки',
-                filterTestId: 'burovi-ustanovki'
+                filterTestId: 'burovi-ustanovki',
             },
             {
                 name: 'Дорожньо-будівельна техніка',
-                filterTestId: 'dorozhno-budivelna-tekhnika'
+                filterTestId: 'dorozhno-budivelna-tekhnika',
             },
             {
                 name: 'Екскаватори',
-                filterTestId: 'ekskavatori'
+                filterTestId: 'ekskavatori',
             },
             {
                 name: 'Інша спецтехніка',
-                filterTestId: 'insha-spectekhnika'
+                filterTestId: 'insha-spectekhnika',
             },
             {
-                name: 'Катки',  
-                filterTestId: 'katki'
+                name: 'Катки',
+                filterTestId: 'katki',
             },
             {
                 name: 'Контейнери',
-                filterTestId: 'konteineri'
+                filterTestId: 'konteineri',
             },
             {
                 name: 'Крани',
-                filterTestId: 'krani'
+                filterTestId: 'krani',
             },
             {
                 name: 'Навантажувачі',
-                filterTestId: 'navantazhuvachi'
+                filterTestId: 'navantazhuvachi',
             },
             {
                 name: 'Обладнання для спецтехніки',
-                filterTestId: 'obladnannya-dlya-spectekhniki'
+                filterTestId: 'obladnannya-dlya-spectekhniki',
             },
             {
                 name: 'Підйомники',
-                filterTestId: 'pidiomniki'
+                filterTestId: 'pidiomniki',
             },
             {
                 name: 'Техніка для земляних робіт',
-                filterTestId: 'tekhnika-dlya-zemlyanikh-robit'
-            }
-        ]
+                filterTestId: 'tekhnika-dlya-zemlyanikh-robit',
+            },
+        ],
     },
     {
         name: 'Комунальна техніка',
@@ -66,33 +66,33 @@ export const categories: CategoryData[] = [
         subcategories: [
             {
                 name: 'Аварійні машини',
-                filterTestId: 'avariini-mashini'
+                filterTestId: 'avariini-mashini',
             },
             {
                 name: 'Дорожньо-прибиральна техніка',
-                filterTestId: 'dorozhno-pribiralna-tekhnika'
+                filterTestId: 'dorozhno-pribiralna-tekhnika',
             },
             {
                 name: 'Клінінгове обладнання',
-                filterTestId: 'kliningove-obladnannya'
+                filterTestId: 'kliningove-obladnannya',
             },
             {
                 name: 'Комунальні контейнери',
-                filterTestId: 'komunalni-konteineri'
+                filterTestId: 'komunalni-konteineri',
             },
             {
                 name: 'Комунальні машини',
-                filterTestId: 'komunalni-mashini'
+                filterTestId: 'komunalni-mashini',
             },
             {
                 name: 'Обладнання для комунальної техніки',
-                filterTestId: 'obladnannya-dlya-komunalnoyi-tekhniki'
+                filterTestId: 'obladnannya-dlya-komunalnoyi-tekhniki',
             },
             {
                 name: 'Сільськогосподарська техніка',
-                filterTestId: 'silskogospodarska-tekhnika'
-            }
-        ]
+                filterTestId: 'silskogospodarska-tekhnika',
+            },
+        ],
     },
     {
         name: 'Складська техніка',
@@ -100,12 +100,12 @@ export const categories: CategoryData[] = [
         subcategories: [
             {
                 name: 'Обладнання для навантажувачів',
-                filterTestId: 'obladnannya-dlya-navantazhuvachiv'
+                filterTestId: 'obladnannya-dlya-navantazhuvachiv',
             },
             {
                 name: 'Техніка для складування',
-                filterTestId: 'tekhnika-dlya-skladuvannya'
-            }
-        ]
-    }
+                filterTestId: 'tekhnika-dlya-skladuvannya',
+            },
+        ],
+    },
 ];

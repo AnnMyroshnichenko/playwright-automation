@@ -33,11 +33,11 @@ export class ProductsPage extends BasePage{
     }
 
     public get minPriceInput(): Locator {
-        return this.page.getByTestId('input');
+        return this.page.locator('input[type="number"][data-testid="input"]');
     }
 
     public get maxPriceInput(): Locator {
-        return this.page.getByTestId('input2');
+        return this.page.locator('input[type="number"][data-testid="input2"]');
     }
 
     public get resultsCount(): Locator {
@@ -61,12 +61,12 @@ export class ProductsPage extends BasePage{
     }
 
     public async selectCategory(category: string): Promise<void> {
-        const categoryLocator = this.page.getByTestId('firstCategoryLabel').getByText(category);
+        const categoryLocator = this.page.getByTestId('firstCategoryLabel').getByText(category, { exact: true });
         await categoryLocator.click();
     }
 
     public async selectSubcategory(subcategory: string): Promise<void> {
-        const subcategoryLocator = this.page.getByTestId('checkLabel').getByText(subcategory);
+        const subcategoryLocator = this.page.getByTestId('checkLabel').getByText(subcategory, { exact: true });
         await subcategoryLocator.click();
     }
 }
