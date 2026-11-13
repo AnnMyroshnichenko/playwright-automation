@@ -1,116 +1,168 @@
 import { Locator, Page } from '@playwright/test';
 
 export class Header {
-    protected readonly page: Page;
+  protected readonly page: Page;
 
-    constructor(page: Page)  {      
-        this.page = page;
-    }
+  constructor(page: Page) {
+    this.page = page;
+  }
 
-    public get logo(): Locator {
-        return this.page.getByTestId('Navbar').getByTestId('logo');
-    }
+  public get logo(): Locator {
+    return this.page.getByTestId('Navbar').getByTestId('logo');
+  }
 
-    public get advertisement(): Locator {
-        return this.page.getByTestId('Navbar').getByRole('link', { name: 'Оголошення'});
-    }
+  public get advertisement(): Locator {
+    return this.page
+      .getByTestId('Navbar')
+      .getByRole('link', { name: 'Оголошення' });
+  }
 
-    public get jobApplications(): Locator {
-        return this.page.getByTestId('Navbar').getByRole('link', { name: 'Запити на роботу'});
-    }
+  public get jobApplications(): Locator {
+    return this.page
+      .getByTestId('Navbar')
+      .getByRole('link', { name: 'Запити на роботу' });
+  }
 
-    public get tenders(): Locator {
-         return this.page.getByTestId('Navbar').getByRole('link', { name: 'Тендери'});
-    }
+  public get tenders(): Locator {
+    return this.page
+      .getByTestId('Navbar')
+      .getByRole('link', { name: 'Тендери' });
+  }
 
-    public get placeAd(): Locator {
-        return this.page.getByTestId('Navbar').getByRole('link', { name: 'Подати оголошення'});
-    }
+  public get placeAd(): Locator {
+    return this.page
+      .getByTestId('Navbar')
+      .getByRole('link', { name: 'Подати оголошення' });
+  }
 
-    public get searchField(): Locator {
-        return this.page.getByTestId('searchInput').first();
-    }
+  public get searchField(): Locator {
+    return this.page.getByTestId('searchInput').first();
+  }
 
-    public get searchHistoryItems(): Locator {
-        return this.page
-            .locator('h6:text-is("Історія пошуку") + div')
-            .getByTestId('resultItem');
-    }
+  public get searchHistoryItems(): Locator {
+    return this.page
+      .locator('h6:text-is("Історія пошуку") + div')
+      .getByTestId('resultItem');
+  }
 
-    public get citySearchField(): Locator {
-        return this.page.getByTestId('cityInput');
-    }
+  public get citySearchField(): Locator {
+    return this.page.getByTestId('cityInput');
+  }
 
-    public get loginBtn(): Locator {
-        return this.page.getByText('Вхід', { exact: true });
-    }
+  public get loginBtn(): Locator {
+    return this.page.getByText('Вхід', { exact: true });
+  }
 
-    public get catalogDropdown(): Locator {
-        return this.page.getByText('Каталог', { exact: true });
-    }
+  public get userIcon(): Locator {
+    return this.page.getByTestId('avatarBlock');
+  }
 
-    public get specMachineryCatalog(): Locator {
-        return this.page.locator('[class^="Catalog_container"]').getByText('Спецтехніка', { exact: true });
-    }
+  public get userDropdown(): Locator {
+    return this.page.getByTestId('profileDropdown');
+  }
 
-    public get servicesCatalog(): Locator {
-        return this.page.locator('[class^="Catalog_container"]').getByText('Послуги', { exact: true });
-    }
+  public get userEmail(): Locator {
+    return this.userDropdown.getByTestId('email');
+  }
 
-    public get constructionMachinery(): Locator {
-        return this.page.locator('[class^="Catalog_list"]').getByText('Будівельна техніка');
-    }
+  public get userProfile(): Locator {
+    return this.userDropdown.getByTestId('profile');
+  }
 
-    public get municipalMachinery(): Locator {
-        return this.page.locator('[class^="Catalog_list"]').getByText('Комунальна техніка');
-    }
+  public get userLogout(): Locator {
+    return this.userDropdown.getByTestId('logout');
+  }
 
-    public get warehouseMachinery(): Locator {
-        return this.page.locator('[class^="Catalog_list"]').getByText('Складська техніка');
-    }
+  public get catalogDropdown(): Locator {
+    return this.page.getByText('Каталог', { exact: true });
+  }
 
-    public get agricultural(): Locator {
-        return this.page.locator('[class^="Catalog_list"]').getByText('Сільськогосподарські');
-    }
+  public get specMachineryCatalog(): Locator {
+    return this.page
+      .locator('[class^="Catalog_container"]')
+      .getByText('Спецтехніка', { exact: true });
+  }
 
-    public get construction(): Locator {
-        return this.page.locator('[class^="Catalog_list"]').getByText('Будівельні');
-    }
+  public get servicesCatalog(): Locator {
+    return this.page
+      .locator('[class^="Catalog_container"]')
+      .getByText('Послуги', { exact: true });
+  }
 
-    public get other(): Locator {
-        return this.page.locator('[class^="Catalog_list"]').getByText('Інші');
-    }
+  public get constructionMachinery(): Locator {
+    return this.page
+      .locator('[class^="Catalog_list"]')
+      .getByText('Будівельна техніка');
+  }
 
-    async clickLogo(): Promise<void> {
-        await this.logo.click();
-    }
+  public get municipalMachinery(): Locator {
+    return this.page
+      .locator('[class^="Catalog_list"]')
+      .getByText('Комунальна техніка');
+  }
 
-    async openCatalogDropdown(): Promise<void> {
-        await this.catalogDropdown.click();
-    }
+  public get warehouseMachinery(): Locator {
+    return this.page
+      .locator('[class^="Catalog_list"]')
+      .getByText('Складська техніка');
+  }
 
-    async clickAdvertisements(): Promise<void> {
-        await this.advertisement.click();
-    }
+  public get agricultural(): Locator {
+    return this.page
+      .locator('[class^="Catalog_list"]')
+      .getByText('Сільськогосподарські');
+  }
 
-    async clickTenders(): Promise<void> {
-        await this.tenders.click();
-    }
+  public get construction(): Locator {
+    return this.page.locator('[class^="Catalog_list"]').getByText('Будівельні');
+  }
 
-    async searchForItem(item: string): Promise<void> {
-        await this.searchField.fill(item);
-        await this.searchField.press('Enter');
-    }
+  public get other(): Locator {
+    return this.page.locator('[class^="Catalog_list"]').getByText('Інші');
+  }
 
-    async clickSearchField(): Promise<void> {
-        await this.searchField.click();
-    }
+  async clickLogo(): Promise<void> {
+    await this.logo.click();
+  }
 
-    async clickLogin(): Promise<void> {
-        await this.loginBtn.click();
-    }
+  async openCatalogDropdown(): Promise<void> {
+    await this.catalogDropdown.click();
+  }
 
-    async clickPlaceAnAd(): Promise<void> {
-        await this.placeAd.click();
-    }
+  async clickAdvertisements(): Promise<void> {
+    await this.advertisement.click();
+  }
+
+  async clickTenders(): Promise<void> {
+    await this.tenders.click();
+  }
+
+  async searchForItem(item: string): Promise<void> {
+    await this.searchField.fill(item);
+    await this.searchField.press('Enter');
+  }
+
+  async clickSearchField(): Promise<void> {
+    await this.searchField.click();
+  }
+
+  async clickLogin(): Promise<void> {
+    await this.loginBtn.click();
+  }
+
+  async clickUserIcon(): Promise<void> {
+    await this.userIcon.click();
+  }
+
+  public async clickUserProfile(): Promise<void> {
+    await this.userProfile.click();
+  }
+
+  public async clickLogout(): Promise<void> {
+    await this.userLogout.click();
+  }
+
+  async clickPlaceAnAd(): Promise<void> {
+    await this.placeAd.click();
+  }
 }
