@@ -26,4 +26,8 @@ export abstract class BasePage {
   async getText(locator: Locator): Promise<string> {
     return (await locator.textContent())?.trim() ?? '';
   }
+
+  public getUrl(): string {
+    return this.page.url();
+  }
 }
