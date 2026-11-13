@@ -1,0 +1,28 @@
+{
+    "units": [],
+    "services": [
+        {
+            "id": 25,
+            "category": [{ "id": 2, "name": "Сільськогосподарські" }],
+            "name": "Навантаження та розвантаження урожаю",
+            "image": "https://rentzila-dev.s3.amazonaws.com/photos/services/service_%D0%9D%D0%B0%D0%B2%D0%B0%D0%BD%D1%82%D0%B0%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20%D1%80%D0%BE%D0%B7%D0%B2%D0%B0%D0%BD%D1%82%D0%B0%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F%20%D1%83%D1%80%D0%BE%D0%B6%D0%B0%D1%8E/8_9_str_zernosushilnyj_komp_oh59jlV.png"
+        },
+        {
+            "id": 27,
+            "category": [{ "id": 2, "name": "Сільськогосподарські" }],
+            "name": "Комплекс робіт",
+            "image": "https://rentzila-dev.s3.amazonaws.com/photos/services/service_%D0%9A%D0%BE%D0%BC%D0%BF%D0%BB%D0%B5%D0%BA%D1%81%20%D1%80%D0%BE%D0%B1%D1%96%D1%82/8_9_str_zernosushilnyj_kompleks2_kopiya_1_EW96Z27.png"
+        },
+        {
+            "id": 50,
+            "category": [{ "id": 3, "name": "Будівельні" }],
+            "name": "Навантаження та розвантаження",
+            "image": "https://rentzila-dev.s3.amazonaws.com/photos/services/service_%D0%9D%D0%B0%D0%B2%D0%B0%D0%BD%D1%82%D0%B0%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20%D1%80%D0%BE%D0%B7%D0%B2%D0%B0%D0%BD%D1%82%D0%B0%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F/man-farmer-works-farm-field-cultiv_r7RtpMz.png"
+        }
+    ],
+    "categories": [
+        { "id": 41, "name": "багатоковшові екскаватори", "slug": "bagatokovshovi-ekskavatori", "parent": 5, "level": 3 },
+        { "id": 85, "name": "асфальтні заводи", "slug": "asfaltni-zavodi", "parent": 10, "level": 3 },
+        { "id": 86, "name": "асфальтоукладальники", "slug": "asfaltoukladalniki", "parent": 10, "level": 3 }    
+    ]
+}

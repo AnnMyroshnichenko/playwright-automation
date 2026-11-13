@@ -75,7 +75,7 @@ export class Header {
     }
 
     public get specMachineryCatalog(): Locator {
-        return this.page.locator('[class^="Catalog_container"]').getByText('Спецтехніка', { exact: true });
+        return this.page.locator('[class^="Catalog_container"]').locator('[class^="Catalog_parent"]').getByText('Спецтехніка', { exact: true });
     }
 
     public get servicesCatalog(): Locator {
@@ -118,9 +118,9 @@ export class Header {
         return this.catalogDropdownOpened.getByText(name, { exact: true });
     }
 
-    public async openCategorySubmenu(sectionName: string, categoryName: string): Promise<void> {
+    public async openCategorySubmenu(sectionName: Locator, categoryName: string): Promise<void> {
         await this.catalogDropdown.click();
-        await this.catalogCategory(sectionName).hover();
+        await sectionName.hover();
         await this.catalogCategory(categoryName).hover();
         await this.catalogSubcategoriesItems.first().waitFor({ state: 'visible' });
     }
@@ -146,7 +146,26 @@ export class Header {
         await this.page.waitForURL('/');
     }
 
-    async clickCategory(categoryLocator: Locator): Promise<void> {
-        await categoryLocator.click();
+    public async openCatalogSection(serviceLocator: Locator): Promise<void> {
+        await this.goToMainPage();
+        await this.page.waitForLoadState('load');
+        await this.catalogDropdown.click();
+        await this.catalogDropdownOpened.waitFor({ state: 'visible' });
+        await serviceLocator.hover();
     }
+    public async typeInSearchAndWaitForResults(text: string): Promise<void> {
+        const response = this.page.waitForResponse(r =>
+                r.url().includes('/api/search/?search=') &&                 
+                r.url().includes(encodeURIComponent(text.trim()))  
+            );
+        await this.typeInSearchField(text);
+        await response;
+    }
+
+    public async searchAndWaitForResults(): Promise<void> {
+        const response = this.page.waitForResponse(r => r.url().includes('/api/units/map/')); 
+        await this.pressEnterInSearchField();
+        await response;
+    }
+
 }

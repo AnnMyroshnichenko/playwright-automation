@@ -28,7 +28,6 @@ test.describe('Map tests', () => {
             await expect.poll(() => productsPage.map.getRegionWidth()).toBeGreaterThan(before);
             await productsPage.map.waitForZoomEnd();
 
-
             before = await productsPage.map.getRegionWidth();
             await productsPage.map.scrollZoom(110);
             await expect.poll(() => productsPage.map.getRegionWidth()).toBeLessThan(before);
