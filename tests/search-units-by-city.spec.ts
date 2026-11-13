@@ -3,50 +3,52 @@ import { cities, invalidCities } from '../test-data/cities';
 
 test.describe('TC C519: Search for units by city', () => {
   test.beforeEach(async ({ mainPage, productsPage }) => {
-    await mainPage.open();
-    await expect(mainPage.showOnMap).toBeVisible();
-
-    await mainPage.clickShowOnMap();
+    await mainPage.openMap();
     await expect(productsPage.map).toBeVisible();
   });
 
-  test('should search units by city', async ({ productsPage }) => {
-    await expect(productsPage.cityField).toBeVisible();
-    await productsPage.cityField.click();
-    await productsPage.submitCitySearch();
+  for (const value of [
+    cities.kyivSearch.toUpperCase(),
+    cities.kyivSearch.toLowerCase(),
+  ]) {
+    test(`should show Kyiv suggestion for "${value}"`, async ({
+      productsPage,
+    }) => {
+      await expect(productsPage.cityField).toBeVisible();
 
-    await expect(productsPage.map).toBeVisible();
-
-    await productsPage.enterCityCharacterByCharacter(cities.kyivSearch);
-
-    await expect(productsPage.getCitySuggestion(cities.kyiv)).toBeVisible();
-
-    await productsPage.clearCityField();
-
-    await expect(productsPage.cityField).toHaveValue('');
-    await expect(productsPage.map).toBeVisible();
-
-    for (const value of [cities.kyivUppercase, cities.kyivLowercase]) {
       await productsPage.enterCity(value);
-      await expect(productsPage.cityField).toHaveValue(value);
-    }
 
-    await productsPage.enterCity(cities.kyivSearch);
+      await expect(productsPage.getCitySuggestion(cities.kyiv)).toBeVisible();
+    });
+  }
 
-    const citySuggestion = productsPage.getCitySuggestion(cities.kyiv);
+  test('should select a city suggestion', async ({ productsPage }) => {
+    await expect(productsPage.cityField).toBeVisible();
 
-    await expect(citySuggestion).toBeVisible();
-    await expect(citySuggestion).toBeVisible({
-      timeout: 15000,
+    await test.step('Enter city and find suggestion', async () => {
+      await productsPage.enterCity(cities.kyivSearch);
+
+      await expect(productsPage.getCitySuggestion(cities.kyiv)).toBeVisible();
     });
 
-    await expect(productsPage.map).toBeVisible();
+    await test.step('Select suggestion and verify city field', async () => {
+      await productsPage.selectCitySuggestion(cities.kyiv);
 
-    for (const value of invalidCities) {
-      await productsPage.enterCity(value);
-      await productsPage.submitCitySearch();
-
-      await expect(productsPage.map).toBeVisible();
-    }
+      await expect(productsPage.cityField).toHaveValue(cities.kyivSearch);
+    });
   });
+
+  for (const city of invalidCities) {
+    test(`should not show Kyiv suggestion for invalid city "${city}"`, async ({
+      productsPage,
+    }) => {
+      await expect(productsPage.cityField).toBeVisible();
+
+      await productsPage.enterCity(city);
+
+      await expect(
+        productsPage.getCitySuggestion(cities.kyiv),
+      ).not.toBeVisible();
+    });
+  }
 });

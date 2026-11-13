@@ -79,11 +79,6 @@ export class MainPage extends BasePage {
     await this.allPurposesUnderEquipment.nth(index).click();
   }
 
-  async searchForItemMainPage(item: string): Promise<void> {
-    await this.searchField.fill(item);
-    await this.searchField.press('Enter');
-  }
-
   public async clickShowOnMap(): Promise<void> {
     await this.showOnMap.click();
   }
@@ -104,5 +99,10 @@ export class MainPage extends BasePage {
     } else {
       await this.searchField.fill('');
     }
+  }
+
+  public async openMap(): Promise<void> {
+    await this.open();
+    await this.clickShowOnMap();
   }
 }

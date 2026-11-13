@@ -79,10 +79,7 @@ export class ProductsPage extends BasePage {
 
   public async enterCityCharacterByCharacter(city: string): Promise<void> {
     await this.cityField.fill('');
-
-    for (const character of city) {
-      await this.cityField.pressSequentially(character);
-    }
+    await this.cityField.pressSequentially(city);
   }
 
   public async submitCitySearch(): Promise<void> {
@@ -107,7 +104,7 @@ export class ProductsPage extends BasePage {
   }
 
   public get searchResultsTitle(): Locator {
-    return this.page.locator('h1[class*="MapPagination_count"]');
+    return this.page.getByRole('heading', { level: 1 });
   }
 
   public get zoomOutButton(): Locator {
@@ -115,7 +112,11 @@ export class ProductsPage extends BasePage {
   }
 
   public get clusters(): Locator {
-    return this.page.locator('#map path.leaflet-interactive[fill="gray"]');
+    return this.page.locator('#map path.leaflet-interactive');
+  }
+
+  public get individualMarkers(): Locator {
+    return this.page.locator('#map img.leaflet-marker-icon');
   }
 
   public async zoomOut(times: number = 3): Promise<void> {
@@ -136,5 +137,9 @@ export class ProductsPage extends BasePage {
     if ((await this.clusters.count()) > 0) {
       await this.clusters.first().click();
     }
+  }
+
+  public async waitForMapUpdate(): Promise<void> {
+    await this.page.waitForTimeout(1000);
   }
 }

@@ -2,30 +2,33 @@ import { test, expect } from '../fixtures/products.fixture';
 
 test.describe('TC C517: Select a cluster of units', () => {
   test.beforeEach(async ({ mainPage, productsPage }) => {
-    await mainPage.open();
-    await expect(mainPage.showOnMap).toBeVisible();
-
-    await mainPage.clickShowOnMap();
+    await mainPage.openMap();
     await expect(productsPage.map).toBeVisible();
   });
 
-  test('should zoom into map clusters and display individual units', async ({
+  test('should select a cluster and update the map', async ({
     productsPage,
   }) => {
-    await expect(productsPage.zoomOutButton).toBeVisible();
+    let initialClusterCount = 0;
 
-    await productsPage.zoomOut();
+    await test.step('Zoom out and count initial clusters', async () => {
+      await expect(productsPage.zoomOutButton).toBeVisible();
 
-    await expect(productsPage.clusters.first()).toBeVisible();
+      await productsPage.zoomOut();
 
-    await productsPage.selectFirstCluster();
+      initialClusterCount = await productsPage.clusters.count();
 
-    await expect(productsPage.map).toBeVisible();
+      expect(initialClusterCount).toBeGreaterThan(0);
+    });
 
-    await productsPage.zoomOut();
+    await test.step('Select the first cluster', async () => {
+      await productsPage.selectFirstCluster();
+    });
 
-    await productsPage.selectAnotherClusterIfAvailable();
-
-    await expect(productsPage.map).toBeVisible();
+    await test.step('Verify that the number of clusters decreases', async () => {
+      await expect
+        .poll(() => productsPage.clusters.count())
+        .toBeLessThan(initialClusterCount);
+    });
   });
 });
