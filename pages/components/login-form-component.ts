@@ -5,7 +5,7 @@ export class LoginForm {
     private readonly root: Locator;
     private readonly restorePassRoot: Locator;
 
-    constructor(page: Page)  {      
+    constructor(page: Page) {
         this.page = page;
         this.root = this.page.getByTestId('authorizationContainer');
         this.restorePassRoot = this.page.getByTestId('restorePasswordContainer');
@@ -52,7 +52,7 @@ export class LoginForm {
     }
 
     get restorePasswordCrossBtn(): Locator {
-        return this.restorePassRoot.getByTestId('restorePasswordCross'); 
+        return this.restorePassRoot.getByTestId('restorePasswordCross');
     }
 
     async fillLoginForm(login: string, password: string): Promise<void> {
@@ -60,29 +60,9 @@ export class LoginForm {
         await this.passwordField.fill(password);
     }
 
-    async clickLoginBtn(): Promise<void> {
-        await this.loginBtn.click();
-    }
-
-    async clickForgotPasswordLink(): Promise<void> {
-        await this.forgotPasswordLink.click();
-    }
-
-    async switchToRegistration(): Promise<void> {
-        await this.registerBtn.click();
-    }
-
-    async fillRestorePasswordForm(email: string): Promise<void> {
-        await this.restorePasswordField.fill(email);
-    }
-
     async fillRegisterForm(login: string, password: string): Promise<void> {
         await this.registrationCheckbox.check();
         await this.loginField.fill(login);
         await this.passwordField.fill(password);
-    }
-
-    async clickRegisterBtn(): Promise<void> {
-        await this.registerationBtn.click();
     }
 }

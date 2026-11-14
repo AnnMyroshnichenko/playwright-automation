@@ -1,12 +1,12 @@
-import { Locator,Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import { BasePage } from './base-page';
-import { Footer} from './components/footer-component';
+import { Footer } from './components/footer-component';
 
 export class MainPage extends BasePage {
     public readonly footer: Footer;
     protected readonly url = "/"
 
-    constructor(page: Page ) {
+    constructor(page: Page) {
         super(page)
         this.footer = new Footer(page);
     }
@@ -57,14 +57,6 @@ export class MainPage extends BasePage {
 
     public get allPurposesUnderEquipment(): Locator {
         return this.page.getByTestId('specialEquipment').locator('[class^="RentzilaProposes_proposes_item"]');
-    }
-
-    async clickServicesFilter(filter: Locator): Promise<void> {
-        await filter.click();
-    }
-
-    async clickEquipmentFilter(filter: Locator): Promise<void> {
-        await filter.click();
     }
 
     async clickPurposeServices(index: number): Promise<void> {
