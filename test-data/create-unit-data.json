@@ -1,7 +1,9 @@
 {
-    "c329": {
+    "validData": {
         "unitName": "TestUnitName",
-        "unitProducer": "ABAC"
+        "unitProducer": "ABAC",
+        "categoryName": "палебійні установки",
+        "imagePath1": "test-data/images/create-unit-valid-1.jpg"
     },
     "tabNames":[
         "Основна інформація",

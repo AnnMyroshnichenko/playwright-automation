@@ -10,37 +10,24 @@ test.describe('unit creation flow tests', () => {
     });
 
     test('C329. Verify "Далі" button on main information tab', async ({ createUnitPage }) => {
-        test.step('1. Click on "Далі" button without filling required fields', async () => {
+        await test.step('1. Click on "Далі" button without filling required fields', async () => {
             await expect(createUnitPage.nextBtn).toBeVisible();
             await expect(createUnitPage.nextBtn).toHaveText(unitData.buttonNames.nextBtn);
             await createUnitPage.nextBtn.click();
         });
 
-        test.step('2. Error messages should be displayed', async () => {
+        await test.step('2. Error messages should be displayed', async () => {
             for (const fieldLocator of [createUnitPage.categoryField, createUnitPage.unitNameField, createUnitPage.producerSearchField, createUnitPage.adressField]) {
                 await expect(createUnitPage.getinputError(fieldLocator)).toBeVisible();
             }
         });
         
-        test.step('3. Fill required fields and press "Далі" button', async () => {
-            await createUnitPage.setCategory();
-
-            await createUnitPage.unitNameField.fill(unitData.c329.unitName);
-            await createUnitPage.typeInField(createUnitPage.producerSearchField, unitData.c329.unitProducer);
-            await expect(createUnitPage.producerSearchDropdownItems.first()).toBeVisible();
-            await createUnitPage.producerSearchDropdownItems.first().click();
-
-            await createUnitPage.adressField.click();
-            await expect(createUnitPage.mapPopup).toBeVisible();
-            await createUnitPage.mapPopupSelectBtn.click();
-
-            await expect(createUnitPage.mapPopup).toBeHidden();
-            await expect(createUnitPage.adressField).not.toHaveText(unitData.addressPlaceholder);
-            await createUnitPage.nextBtn.click();
+        await test.step('3. Fill required fields and press "Далі" button', async () => {
+            await createUnitPage.fillDataInRequiredFields(unitData.validData.unitName, unitData.validData.unitProducer, unitData.addressPlaceholder);
         });
         
 
-        test.step('4. Verify that the next tab is opened', async () => {
+        await test.step('4. Verify that the next tab is opened', async () => {
             for (let i = 0; i < unitData.tabNames.length; i++) {
                 const tabNumberLocator = createUnitPage.tabNumbers.nth(i);
                 await expect(tabNumberLocator).toBeVisible();
@@ -55,5 +42,72 @@ test.describe('unit creation flow tests', () => {
             await expect(createUnitPage.bodyTitle).toBeVisible();
             await expect(createUnitPage.bodyTitle).toHaveText(unitData.bodyTitle);
         });
-    })
+    });
+
+    test('C390. Trying to proceed without uploading image', async ({ createUnitPage }) => {
+        await test.step('1. Fill required fields', async () => {
+            await createUnitPage.fillDataInRequiredFields(unitData.validData.unitName, unitData.validData.unitProducer, unitData.addressPlaceholder);
+            await createUnitPage.nextBtn.click();
+        });
+
+        await test.step('2. return to the previous tab', async () => {
+            await expect(createUnitPage.prevBtn).toBeVisible();
+            await expect(createUnitPage.prevBtn).toHaveText(unitData.buttonNames.prevBtn);
+            await createUnitPage.prevBtn.click();
+
+            for (let i = 0; i < unitData.tabNames.length; i++) {
+                if (i !== 0) {
+                    await expect(createUnitPage.tabButtons.nth(i)).toHaveAttribute('aria-selected', 'false');
+                }
+            }
+            await expect(createUnitPage.tabButtons.nth(0)).toHaveAttribute('aria-selected', 'true');
+        });
+
+        await test.step('3. Verify that the data in the fields is preserved', async () => {
+            await expect(createUnitPage.categoryField).toHaveText(unitData.validData.categoryName);
+            await expect(createUnitPage.unitNameField).toHaveValue(unitData.validData.unitName);
+            await expect(createUnitPage.producerSelected).toHaveText(unitData.validData.unitProducer);
+            await expect(createUnitPage.adressField).not.toHaveText(unitData.addressPlaceholder);
+        });
+
+    });
+    
+    test('C393. Trying to proceed without uploading image', async ({ createUnitPage }) => {
+         await test.step('1. Fill required fields', async () => {
+            await expect(createUnitPage.nextBtn).toBeVisible();
+            await createUnitPage.fillDataInRequiredFields(unitData.validData.unitName, unitData.validData.unitProducer, unitData.addressPlaceholder);
+        });
+
+        await test.step('2. Click on "Далі" button', async () => {
+            await expect(createUnitPage.imageBlocks.first()).toBeVisible();
+            await createUnitPage.nextBtn.click();
+
+            await expect(createUnitPage.imageHint).toHaveAttribute('class', /ImagesUnitFlow_error/);
+            await expect(createUnitPage.tabButtons.nth(1)).toHaveAttribute('aria-selected', 'true');
+        });
+        
+
+        await test.step('3. Upload image', async () => {
+            await expect(createUnitPage.imageBlocks.first()).toBeVisible();
+            await createUnitPage.uploadImages(unitData.validData.imagePath1);
+            await createUnitPage.nextBtn.click();
+        });
+
+        await test.step('4. Verify that the next tab is opened', async () => {
+            for (let i = 0; i < unitData.tabNames.length; i++) {
+                const tabNumberLocator = createUnitPage.tabNumbers.nth(i);
+                await expect(tabNumberLocator).toBeVisible();
+                await expect(tabNumberLocator).toHaveText((i + 1).toString());
+                await expect(createUnitPage.getTabTextLocator(tabNumberLocator)).toHaveText(unitData.tabNames[i]);
+                if (i !== 2) {
+                    await expect(createUnitPage.tabButtons.nth(i)).toHaveAttribute('aria-selected', 'false');
+                }
+            }
+            await expect(createUnitPage.tabButtons.nth(2)).toHaveAttribute('aria-selected', 'true');
+
+            await expect(createUnitPage.bodyTitle).toBeVisible();
+            await expect(createUnitPage.bodyTitle).toHaveText(unitData.bodyTitle);
+        });
+    });
+
 })

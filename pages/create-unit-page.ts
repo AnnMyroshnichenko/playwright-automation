@@ -39,6 +39,10 @@ export class CreateUnitPage extends BasePage {
         return this.page.getByTestId('item-customSelectWithSearch');
     }
 
+    get producerSelected(): Locator {
+        return this.page.getByTestId('div-service-customSelectWithSearch');
+    }
+
     get adressField(): Locator {
         return this.page.getByTestId('mapLabel');
     }
@@ -71,6 +75,18 @@ export class CreateUnitPage extends BasePage {
         return this.page.getByTestId('label');
     }
 
+    get imageBlocks(): Locator {
+        return this.page.getByTestId('imageBlock');
+    }
+
+    get imageInput(): Locator {
+        return this.page.getByTestId('input_ImagesUnitFlow');
+    }
+
+    get imageHint(): Locator {
+        return this.page.getByTestId('description');
+    }
+
     public getinputError(fieldLocator: Locator): Locator {
         return fieldLocator.locator('xpath=following-sibling::div[1]');
     }
@@ -91,6 +107,28 @@ export class CreateUnitPage extends BasePage {
         await this.popupSubcategoryItems.first().click();
         await this.popupthirdCategoryLevelItem.first().waitFor({ state: 'visible' });
         await this.popupthirdCategoryLevelItem.first().click();
+    }
+
+    public async fillDataInRequiredFields(name: string, producer: string, adressPlaceholder: string): Promise<void> {
+        await this.setCategory();
+
+        await this.unitNameField.fill(name);
+        await this.typeInField(this.producerSearchField, producer);
+        await this.producerSearchDropdownItems.first().waitFor({ state: 'visible' });
+        await this.producerSearchDropdownItems.first().click();
+
+        await this.adressField.click();
+        await this.mapPopup.waitFor({ state: 'visible' });
+        await this.mapPopupSelectBtn.click();
+
+        await this.mapPopup.waitFor({ state: 'hidden' });
+        await this.adressField.filter({ hasNotText: adressPlaceholder }).waitFor();
+
+        await this.nextBtn.click();
+    }
+
+    async uploadImages(...files: string[]): Promise<void> {
+        await this.imageInput.setInputFiles(files);
     }
 
 }
