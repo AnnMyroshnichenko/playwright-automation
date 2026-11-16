@@ -21,11 +21,11 @@ test.describe('unit creation flow tests', () => {
                 await expect(createUnitPage.getinputError(fieldLocator)).toBeVisible();
             }
         });
-        
+
         await test.step('3. Fill required fields and press "Далі" button', async () => {
             await createUnitPage.fillDataInRequiredFields(unitData.validData.unitName, unitData.validData.unitProducer, unitData.addressPlaceholder);
         });
-        
+
 
         await test.step('4. Verify that the next tab is opened', async () => {
             for (let i = 0; i < unitData.tabNames.length; i++) {
@@ -44,7 +44,7 @@ test.describe('unit creation flow tests', () => {
         });
     });
 
-    test('C390. Trying to proceed without uploading image', async ({ createUnitPage }) => {
+    test('C390. After returning to the previous tab data is preserved(Info)', async ({ createUnitPage }) => {
         await test.step('1. Fill required fields', async () => {
             await createUnitPage.fillDataInRequiredFields(unitData.validData.unitName, unitData.validData.unitProducer, unitData.addressPlaceholder);
             await createUnitPage.nextBtn.click();
@@ -71,21 +71,21 @@ test.describe('unit creation flow tests', () => {
         });
 
     });
-    
+
     test('C393. Trying to proceed without uploading image', async ({ createUnitPage }) => {
-         await test.step('1. Fill required fields', async () => {
+        await test.step('1. Fill required fields', async () => {
             await expect(createUnitPage.nextBtn).toBeVisible();
             await createUnitPage.fillDataInRequiredFields(unitData.validData.unitName, unitData.validData.unitProducer, unitData.addressPlaceholder);
         });
 
-        await test.step('2. Click on "Далі" button', async () => {
+        await test.step('2. Click on "Далі" button without uploading image', async () => {
             await expect(createUnitPage.imageBlocks.first()).toBeVisible();
             await createUnitPage.nextBtn.click();
 
             await expect(createUnitPage.imageHint).toHaveAttribute('class', /ImagesUnitFlow_error/);
             await expect(createUnitPage.tabButtons.nth(1)).toHaveAttribute('aria-selected', 'true');
         });
-        
+
 
         await test.step('3. Upload image', async () => {
             await expect(createUnitPage.imageBlocks.first()).toBeVisible();
@@ -107,6 +107,45 @@ test.describe('unit creation flow tests', () => {
 
             await expect(createUnitPage.bodyTitle).toBeVisible();
             await expect(createUnitPage.bodyTitle).toHaveText(unitData.bodyTitle);
+        });
+    });
+
+    test('C488. Verify that the data in the fields is preserved after returning to the previous tab (Services)', async ({ createUnitPage }) => {
+        await test.step('1. Fill required fields', async () => {
+            await expect(createUnitPage.nextBtn).toBeVisible();
+            await createUnitPage.fillDataInRequiredFields(unitData.validData.unitName, unitData.validData.unitProducer, unitData.addressPlaceholder);
+        });
+
+        await test.step('2. Upload image', async () => {
+            await expect(createUnitPage.imageBlocks.first()).toBeVisible();
+            await createUnitPage.uploadImages(unitData.validData.imagePath1);
+
+            await createUnitPage.nextBtn.click();
+        });
+
+        await test.step('3. Pick services', async () => {
+            await expect(createUnitPage.serviceSearchField).toBeVisible();
+            await createUnitPage.typeInField(createUnitPage.serviceSearchField, unitData.serviceName);
+            await expect(createUnitPage.serviceSearchDropdownItems.first()).toBeVisible();
+            await createUnitPage.serviceSearchDropdownItems.first().click();
+
+            await createUnitPage.nextBtn.click();
+        });
+
+        await test.step('4. return to the services tab', async () => {
+            await expect(createUnitPage.prevBtn).toBeVisible();
+            await expect(createUnitPage.prevBtn).toHaveText(unitData.buttonNames.prevBtn);
+            await createUnitPage.prevBtn.click();
+
+            await expect(createUnitPage.selectedService).toBeVisible();
+            await expect(createUnitPage.selectedService).toHaveText(unitData.serviceName);
+
+            for (let i = 0; i < unitData.tabNames.length; i++) {
+                if (i !== 2) {
+                    await expect(createUnitPage.tabButtons.nth(i)).toHaveAttribute('aria-selected', 'false');
+                }
+            }
+            await expect(createUnitPage.tabButtons.nth(2)).toHaveAttribute('aria-selected', 'true');
         });
     });
 

@@ -7,7 +7,7 @@ import { pickRandom } from '../utils/general-helpers';
 
 test.describe('Search field tests', () => {
 
-    test.beforeEach(async ({ mainPage}) => {
+    test.beforeEach(async ({ mainPage }) => {
         await mainPage.open();
         await expect(mainPage.showOnMap).toBeVisible();
     });
@@ -22,7 +22,7 @@ test.describe('Search field tests', () => {
             await mainPage.header.typeInSearchAndWaitForResults(inputText);
             await expect(mainPage.header.searchDropdown).toBeVisible();
 
-            await expect(mainPage.header.searchDropdownServices).toHaveCount(expectedCount);      
+            await expect(mainPage.header.searchDropdownServices).toHaveCount(expectedCount);
             await expect(mainPage.header.rightSideSearchResults).toHaveCount(expectedCount);
             await expect(mainPage.header.searchDropdownCategories).toHaveCount(expectedCount);
 

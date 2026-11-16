@@ -28,7 +28,7 @@ export class CreateUnitPage extends BasePage {
     }
 
     get unitNameField(): Locator {
-        return this.page.getByTestId('custom-input').first();   
+        return this.page.getByTestId('custom-input').first();
     }
 
     get producerSearchField(): Locator {
@@ -87,6 +87,18 @@ export class CreateUnitPage extends BasePage {
         return this.page.getByTestId('description');
     }
 
+    get serviceSearchField(): Locator {
+        return this.page.getByTestId('searchResult');
+    }
+
+    get serviceSearchDropdownItems(): Locator {
+        return this.page.getByTestId('searchItem-servicesUnitFlow');
+    }
+
+    get selectedService(): Locator {
+        return this.page.getByTestId('item-servicesUnitFlow');
+    }
+
     public getinputError(fieldLocator: Locator): Locator {
         return fieldLocator.locator('xpath=following-sibling::div[1]');
     }
@@ -102,7 +114,7 @@ export class CreateUnitPage extends BasePage {
     public async setCategory(): Promise<void> {
         await this.categoryField.click();
         await this.categoryPopup.waitFor({ state: 'visible' });
-        await this.popupConstructionMachinary.click(); 
+        await this.popupConstructionMachinary.click();
         await this.popupSubcategoryItems.first().waitFor({ state: 'visible' });
         await this.popupSubcategoryItems.first().click();
         await this.popupthirdCategoryLevelItem.first().waitFor({ state: 'visible' });

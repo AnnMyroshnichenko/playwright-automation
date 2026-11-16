@@ -68,7 +68,7 @@ test.describe('Catalog tests', () => {
 
             await test.step(`${stepTitle} Click on "${category.name}"`, async () => {
                 if (i > 0) {
-                await mainPage.header.openCatalogSection(mainPage.header.specMachineryCatalog);
+                    await mainPage.header.openCatalogSection(mainPage.header.specMachineryCatalog);
                 }
 
                 await mainPage.header.catalogCategory(category.name).click();
