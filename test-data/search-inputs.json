@@ -1,0 +1,30 @@
+{
+    "spaces": "          ",
+    "numbers": "123",
+    "allowedSpecialChars": [
+        "!",
+        "@",
+        "#",
+        "$",
+        "%",
+        "(",
+        ")",
+        "*"
+    ],
+    "blockedSpecialChars": [
+        "<",
+        ">",
+        "^",
+        ";",
+        "{",
+        "}"
+    ],
+    "nonExistentKeyword": "non-existent тест1234567890",
+    "expectedUnitsCount": {
+        "step8": 0,
+        "step9": 0,
+        "step10": 0,
+        "step11": 0,
+        "step12": 0
+    }
+}

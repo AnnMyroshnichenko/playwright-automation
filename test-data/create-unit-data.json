@@ -1,0 +1,22 @@
+{
+    "validData": {
+        "unitName": "TestUnitName",
+        "unitProducer": "ABAC",
+        "categoryName": "палебійні установки",
+        "imagePath1": "test-data/images/create-unit-valid-1.jpg"
+    },
+    "tabNames":[
+        "Основна інформація",
+        "Фотографії", 
+        "Послуги", 
+        "Вартість", 
+        "Контакти"
+        ],
+    "buttonNames": {
+        "nextBtn": "Далі",
+        "prevBtn": "Назад"
+    },
+    "addressPlaceholder": "Виберіть на мапі",
+    "bodyTitle": "Створити оголошення",
+    "serviceName": "Test123123123"
+}
