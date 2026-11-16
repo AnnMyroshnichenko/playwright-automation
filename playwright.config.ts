@@ -34,9 +34,13 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'], viewport: { width: 1920, height: 1080 } } },
-    // { name: 'firefox',  use: { ...devices['Desktop Firefox'], viewport: { width: 1920, height: 1080 } } },
-    // { name: 'webkit',   use: { ...devices['Desktop Safari'], viewport: { width: 1920, height: 1080 } } },
+    { name: 'setup', testMatch: /.*\.setup\.ts/ },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1920, height: 1080 } },
+      dependencies: ['setup'],
+    },
+    
   
 
     /* Test against mobile viewports. */

@@ -1,0 +1,19 @@
+{
+    "c329": {
+        "unitName": "TestUnitName",
+        "unitProducer": "ABAC"
+    },
+    "tabNames":[
+        "Основна інформація",
+        "Фотографії", 
+        "Послуги", 
+        "Вартість", 
+        "Контакти"
+        ],
+    "buttonNames": {
+        "nextBtn": "Далі",
+        "prevBtn": "Назад"
+    },
+    "addressPlaceholder": "Виберіть на мапі",
+    "bodyTitle": "Створити оголошення"
+}
