@@ -1,9 +1,15 @@
 import { test, expect } from '../fixtures/test';
 
-test.describe('C201: Authorization with valid email and password', () => {
-  const docEmail = process.env.DOC_USER_EMAIL!;
-  const docPassword = process.env.DOC_USER_PASSWORD!;
+const docEmail = process.env.DOC_USER_EMAIL!;
+const docPassword = process.env.DOC_USER_PASSWORD!;
+const basePhone = process.env.DOC_USER_PHONE!;
 
+test.beforeEach(async ({ mainPage }) => {
+  await mainPage.open();
+  await mainPage.header.clickLogin();
+});
+
+test.describe('C201: Authorization with valid email and password', () => {
   const testCredentials = [
     { email: docEmail, caseType: 'lowercase email' },
     { email: docEmail.toUpperCase(), caseType: 'uppercase email' },
@@ -13,9 +19,7 @@ test.describe('C201: Authorization with valid email and password', () => {
     test(`Verify successful login and password toggle with ${creds.caseType}`, async ({
       mainPage,
     }) => {
-      await test.step('Open main page, open login form, and fill credentials', async () => {
-        await mainPage.open();
-        await mainPage.header.clickLogin();
+      await test.step('Fill in credentials', async () => {
         await mainPage.loginForm.fillLoginForm(creds.email, docPassword);
       });
 
@@ -50,9 +54,6 @@ test.describe('C201: Authorization with valid email and password', () => {
 });
 
 test.describe('C202: Authorization with valid phone and password', () => {
-  const basePhone = process.env.DOC_USER_PHONE!;
-  const docPassword = process.env.DOC_USER_PASSWORD!;
-
   const phoneVariations = [
     { phone: basePhone, formatType: 'full format with plus (+)' },
     { phone: basePhone.replace('+', ''), formatType: 'without plus (+)' },
@@ -68,9 +69,7 @@ test.describe('C202: Authorization with valid phone and password', () => {
       mainPage,
       profilePage,
     }) => {
-      await test.step('Open main page, open login form, fill credentials and verify successful authentication', async () => {
-        await mainPage.open();
-        await mainPage.header.clickLogin();
+      await test.step('Fill in credentials and verify successful authentication', async () => {
         await mainPage.loginForm.fillLoginForm(creds.phone, docPassword);
         await mainPage.loginForm.clickLoginBtn();
         await expect(mainPage.header.userIcon).toBeVisible();
@@ -87,7 +86,7 @@ test.describe('C202: Authorization with valid phone and password', () => {
         expect(cleanValue).toBe(basePhone);
       });
 
-      await test.step('Log out to clean up session for the next iteration', async () => {
+      await test.step('Log out and verify user is unauthenticated', async () => {
         await profilePage.clickLogout();
         await expect(mainPage.header.loginBtn).toBeVisible();
         await expect(mainPage.header.userIcon).not.toBeVisible();

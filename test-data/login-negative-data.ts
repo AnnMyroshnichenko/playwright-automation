@@ -118,3 +118,27 @@ export const invalidPhoneCases = [
     description: 'without "38"',
   },
 ];
+
+export const emptyFieldCases = [
+  {
+    description: 'both fields empty',
+    email: '',
+    password: '',
+    expectEmailError: true,
+    expectPasswordError: true,
+  },
+  {
+    description: 'only password empty',
+    email: validEmail,
+    password: '',
+    expectEmailError: false,
+    expectPasswordError: true,
+  },
+  {
+    description: 'only email empty',
+    email: '',
+    password: validPassword,
+    expectEmailError: true,
+    expectPasswordError: false,
+  },
+];

@@ -27,6 +27,8 @@ export class LoginForm {
     return this.root.getByRole('button', { name: 'Увійти', exact: true });
   }
 
+  public readonly errorInputClass = /error_input/;
+
   public get invalidEmailError(): Locator {
     return this.root.getByText('Неправильний формат email або номера телефону');
   }
@@ -81,6 +83,21 @@ export class LoginForm {
 
   async clickLoginBtn(): Promise<void> {
     await this.loginBtn.click();
+  }
+
+  public getEmptyFieldError(field: Locator): Locator {
+    return field
+      .locator('../..')
+      .getByRole('alert')
+      .filter({ hasText: 'Поле не може бути порожнім' });
+  }
+
+  async submit(method: 'click' | 'enter'): Promise<void> {
+    if (method === 'click') {
+      await this.clickLoginBtn();
+    } else {
+      await this.passwordField.press('Enter');
+    }
   }
 
   async clickForgotPasswordLink(): Promise<void> {
