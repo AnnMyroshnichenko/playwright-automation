@@ -1,88 +1,124 @@
 import { Locator, Page } from '@playwright/test';
 
 export class LoginForm {
-    protected readonly page: Page;
-    private readonly root: Locator;
-    private readonly restorePassRoot: Locator;
+  protected readonly page: Page;
+  private readonly root: Locator;
+  private readonly restorePassRoot: Locator;
 
-    constructor(page: Page)  {      
-        this.page = page;
-        this.root = this.page.getByTestId('authorizationContainer');
-        this.restorePassRoot = this.page.getByTestId('restorePasswordContainer');
-    }
+  constructor(page: Page) {
+    this.page = page;
+    this.root = this.page.getByTestId('authorizationContainer');
+    this.restorePassRoot = this.page.getByTestId('restorePasswordContainer');
+  }
 
-    get loginField(): Locator {
-        return this.root.locator('#login');
-    }
+  public get loginField(): Locator {
+    return this.root.locator('#email');
+  }
 
-    get passwordField(): Locator {
-        return this.root.locator('#password');
-    }
+  public get passwordField(): Locator {
+    return this.root.locator('#password');
+  }
 
-    get loginBtn(): Locator {
-        return this.root.getByRole('button', { name: 'Увійти' });
-    }
+  public get showPasswordBtn(): Locator {
+    return this.root.getByTestId('reactHookButton');
+  }
 
-    get forgotPasswordLink(): Locator {
-        return this.root.getByText('Забули пароль?', { exact: true });
-    }
+  public get loginBtn(): Locator {
+    return this.root.getByRole('button', { name: 'Увійти', exact: true });
+  }
 
-    get registerBtn(): Locator {
-        return this.root.getByTestId('switcher');
-    }
+  public readonly errorInputClass = /error_input/;
 
-    get registrationCheckbox(): Locator {
-        return this.root.locator('#registration');
-    }
+  public get invalidEmailError(): Locator {
+    return this.root.getByText('Неправильний формат email або номера телефону');
+  }
+  public get invalidPasswordError(): Locator {
+    return this.root.getByText(
+      'Пароль повинен містити як мінімум 1 цифру, 1 велику літеру і 1 малу літеру, також не повинен містити кирилицю та пробіли',
+    );
+  }
 
-    get registerationBtn(): Locator {
-        return this.root.getByRole('button', { name: 'Зареєструватись' });
-    }
+  public get invalidCredentialsError(): Locator {
+    return this.root.getByTestId('errorMessage');
+  }
 
-    get closeLoginFormBtn(): Locator {
-        return this.root.getByTestId('authClose');
-    }
+  public get forgotPasswordLink(): Locator {
+    return this.root.getByText('Забули пароль?', { exact: true });
+  }
 
-    get restorePasswordField(): Locator {
-        return this.restorePassRoot.getByTestId('reactHookInput');
-    }
+  public get registerBtn(): Locator {
+    return this.root.getByTestId('switcher');
+  }
 
-    get restorePasswordBtn(): Locator {
-        return this.restorePassRoot.getByRole('button', { name: 'Відновити пароль' });
-    }
+  public get registrationCheckbox(): Locator {
+    return this.root.locator('#registration');
+  }
 
-    get restorePasswordCrossBtn(): Locator {
-        return this.restorePassRoot.getByTestId('restorePasswordCross'); 
-    }
+  public get registerationBtn(): Locator {
+    return this.root.getByRole('button', { name: 'Зареєструватись' });
+  }
 
-    async fillLoginForm(login: string, password: string): Promise<void> {
-        await this.loginField.fill(login);
-        await this.passwordField.fill(password);
-    }
+  public get closeLoginFormBtn(): Locator {
+    return this.root.getByTestId('authClose');
+  }
 
-    async clickLoginBtn(): Promise<void> {
-        await this.loginBtn.click();
-    }
+  public get restorePasswordField(): Locator {
+    return this.restorePassRoot.getByTestId('reactHookInput');
+  }
 
-    async clickForgotPasswordLink(): Promise<void> {
-        await this.forgotPasswordLink.click();
-    }
+  public get restorePasswordBtn(): Locator {
+    return this.restorePassRoot.getByRole('button', {
+      name: 'Відновити пароль',
+    });
+  }
 
-    async switchToRegistration(): Promise<void> {
-        await this.registerBtn.click();
-    }
+  public get restorePasswordCrossBtn(): Locator {
+    return this.restorePassRoot.getByTestId('restorePasswordCross');
+  }
 
-    async fillRestorePasswordForm(email: string): Promise<void> {
-        await this.restorePasswordField.fill(email);
-    }
+  async fillLoginForm(login: string, password: string): Promise<void> {
+    await this.loginField.fill(login);
+    await this.passwordField.fill(password);
+  }
 
-    async fillRegisterForm(login: string, password: string): Promise<void> {
-        await this.registrationCheckbox.check();
-        await this.loginField.fill(login);
-        await this.passwordField.fill(password);
-    }
+  async clickLoginBtn(): Promise<void> {
+    await this.loginBtn.click();
+  }
 
-    async clickRegisterBtn(): Promise<void> {
-        await this.registerationBtn.click();
+  public getEmptyFieldError(field: Locator): Locator {
+    return field
+      .locator('../..')
+      .getByRole('alert')
+      .filter({ hasText: 'Поле не може бути порожнім' });
+  }
+
+  async submit(method: 'click' | 'enter'): Promise<void> {
+    if (method === 'click') {
+      await this.clickLoginBtn();
+    } else {
+      await this.passwordField.press('Enter');
     }
+  }
+
+  async clickForgotPasswordLink(): Promise<void> {
+    await this.forgotPasswordLink.click();
+  }
+
+  async switchToRegistration(): Promise<void> {
+    await this.registerBtn.click();
+  }
+
+  async fillRestorePasswordForm(email: string): Promise<void> {
+    await this.restorePasswordField.fill(email);
+  }
+
+  async fillRegisterForm(login: string, password: string): Promise<void> {
+    await this.registrationCheckbox.check();
+    await this.loginField.fill(login);
+    await this.passwordField.fill(password);
+  }
+
+  async clickRegisterBtn(): Promise<void> {
+    await this.registerationBtn.click();
+  }
 }
