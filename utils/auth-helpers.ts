@@ -2,10 +2,12 @@ import { APIRequestContext } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
 
-export const AUTH_FILE = 'playwright/.auth/user.json';
-const ORIGIN = 'https://dev.rentzilla.com.ua';
-const LOGIN_ENDPOINT = '/api/auth/jwt/create/';
 const ENV_FILE = path.resolve(__dirname, '..', '.env');
+if (fs.existsSync(ENV_FILE)) process.loadEnvFile(ENV_FILE);
+export const AUTH_FILE = 'playwright/.auth/user.json';
+const ORIGIN = process.env.BASE_URL;
+const LOGIN_ENDPOINT = process.env.LOGIN_ENDPOINT;
+
 
 type Tokens = { access: string; refresh: string };
 

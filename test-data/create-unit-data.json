@@ -5,13 +5,13 @@
         "categoryName": "палебійні установки",
         "imagePath1": "test-data/images/create-unit-valid-1.jpg"
     },
-    "tabNames":[
+    "tabNames": [
         "Основна інформація",
-        "Фотографії", 
-        "Послуги", 
-        "Вартість", 
+        "Фотографії",
+        "Послуги",
+        "Вартість",
         "Контакти"
-        ],
+    ],
     "buttonNames": {
         "nextBtn": "Далі",
         "prevBtn": "Назад"

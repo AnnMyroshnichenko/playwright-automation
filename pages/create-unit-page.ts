@@ -2,7 +2,7 @@ import { Locator, Page } from '@playwright/test';
 import { BasePage } from './base-page';
 
 export class CreateUnitPage extends BasePage {
-    protected readonly url = "/create-unit/"
+    protected readonly url = process.env.CREATE_UNIT_URL!;
 
     constructor(page: Page) {
         super(page)
@@ -23,7 +23,7 @@ export class CreateUnitPage extends BasePage {
         return this.categoryPopup.getByTestId('namesBlock');
     }
 
-    get popupthirdCategoryLevelItem(): Locator {
+    get popupThirdCategoryLevelItem(): Locator {
         return this.categoryPopup.getByTestId('thirdCategoryLabel');
     }
 
@@ -43,7 +43,7 @@ export class CreateUnitPage extends BasePage {
         return this.page.getByTestId('div-service-customSelectWithSearch');
     }
 
-    get adressField(): Locator {
+    get addressField(): Locator {
         return this.page.getByTestId('mapLabel');
     }
 
@@ -117,11 +117,11 @@ export class CreateUnitPage extends BasePage {
         await this.popupConstructionMachinary.click();
         await this.popupSubcategoryItems.first().waitFor({ state: 'visible' });
         await this.popupSubcategoryItems.first().click();
-        await this.popupthirdCategoryLevelItem.first().waitFor({ state: 'visible' });
-        await this.popupthirdCategoryLevelItem.first().click();
+        await this.popupThirdCategoryLevelItem.first().waitFor({ state: 'visible' });
+        await this.popupThirdCategoryLevelItem.first().click();
     }
 
-    public async fillDataInRequiredFields(name: string, producer: string, adressPlaceholder: string): Promise<void> {
+    public async fillDataInRequiredFields(name: string, producer: string, addressPlaceholderr: string): Promise<void> {
         await this.setCategory();
 
         await this.unitNameField.fill(name);
@@ -129,12 +129,12 @@ export class CreateUnitPage extends BasePage {
         await this.producerSearchDropdownItems.first().waitFor({ state: 'visible' });
         await this.producerSearchDropdownItems.first().click();
 
-        await this.adressField.click();
+        await this.addressField.click();
         await this.mapPopup.waitFor({ state: 'visible' });
         await this.mapPopupSelectBtn.click();
 
         await this.mapPopup.waitFor({ state: 'hidden' });
-        await this.adressField.filter({ hasNotText: adressPlaceholder }).waitFor();
+        await this.addressField.filter({ hasNotText: addressPlaceholderr }).waitFor();
 
         await this.nextBtn.click();
     }

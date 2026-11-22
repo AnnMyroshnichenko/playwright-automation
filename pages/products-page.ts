@@ -3,7 +3,7 @@ import { BasePage } from './base-page';
 import { MapComponent } from './components/map-component';
 
 export class ProductsPage extends BasePage {
-    protected readonly url = "/products/"
+    protected readonly url = process.env.PRODUCTS_URL!;
     public readonly map: MapComponent;
 
     constructor(page: Page) {

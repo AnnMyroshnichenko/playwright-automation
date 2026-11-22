@@ -17,7 +17,7 @@ test.describe('unit creation flow tests', () => {
         });
 
         await test.step('2. Error messages should be displayed', async () => {
-            for (const fieldLocator of [createUnitPage.categoryField, createUnitPage.unitNameField, createUnitPage.producerSearchField, createUnitPage.adressField]) {
+            for (const fieldLocator of [createUnitPage.categoryField, createUnitPage.unitNameField, createUnitPage.producerSearchField, createUnitPage.addressField]) {
                 await expect(createUnitPage.getinputError(fieldLocator)).toBeVisible();
             }
         });
@@ -47,7 +47,6 @@ test.describe('unit creation flow tests', () => {
     test('C390. After returning to the previous tab data is preserved(Info)', async ({ createUnitPage }) => {
         await test.step('1. Fill required fields', async () => {
             await createUnitPage.fillDataInRequiredFields(unitData.validData.unitName, unitData.validData.unitProducer, unitData.addressPlaceholder);
-            await createUnitPage.nextBtn.click();
         });
 
         await test.step('2. return to the previous tab', async () => {
@@ -67,7 +66,7 @@ test.describe('unit creation flow tests', () => {
             await expect(createUnitPage.categoryField).toHaveText(unitData.validData.categoryName);
             await expect(createUnitPage.unitNameField).toHaveValue(unitData.validData.unitName);
             await expect(createUnitPage.producerSelected).toHaveText(unitData.validData.unitProducer);
-            await expect(createUnitPage.adressField).not.toHaveText(unitData.addressPlaceholder);
+            await expect(createUnitPage.addressField).not.toHaveText(unitData.addressPlaceholder);
         });
 
     });

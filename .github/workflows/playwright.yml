@@ -31,12 +31,14 @@ jobs:
           COOKIE_POLICY_URL: ${{ secrets.COOKIE_POLICY_URL }}
           TERMS_URL: ${{ secrets.TERMS_URL }}
           REQUESTS_URL: ${{ secrets.REQUESTS_URL }}
+          CREATE_UNIT_URL: ${{ secrets.CREATE_UNIT_URL }}
           DOC_USER_EMAIL: ${{ secrets.DOC_USER_EMAIL }}
           DOC_USER_PASSWORD: ${{ secrets.DOC_USER_PASSWORD }}
           DOC_USER_PHONE: ${{ secrets.DOC_USER_PHONE }}
           TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
           OWNER_CABINET_URL: ${{ secrets.OWNER_CABINET_URL }}
+          LOGIN_ENDPOINT: ${{ secrets.LOGIN_ENDPOINT }}
         run: npx playwright test
 
       - uses: actions/upload-artifact@v4
