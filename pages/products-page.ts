@@ -1,34 +1,53 @@
-import { Locator,Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import { BasePage } from './base-page';
+import { MapComponent } from './components/map-component';
 
-export class ProductsPage extends BasePage{
-    protected readonly url = "/products/"
+export class ProductsPage extends BasePage {
+    protected readonly url = process.env.PRODUCTS_URL!;
+    public readonly map: MapComponent;
 
-    constructor(page: Page ) {
+    constructor(page: Page) {
         super(page)
-    }
-
-    public get map(): Locator {
-        return this.page.locator('#map');
-    }
-
-    public get showAsListBtn(): Locator {
-        return this.page.getByRole('button', { name: 'Показати список' });
+        this.map = new MapComponent(page);
     }
 
     public get resetFilters(): Locator {
         return this.page.getByTestId('resetFilters');
     }
 
-    public get constructionCategory(): Locator { 
+    public get filtersPanel(): Locator {
+        return this.page.locator('[class^=ResetFilters_filtersWrapper]')
+    }
+
+    public get constructionCategory(): Locator {
         return this.page.getByTestId('firstCategoryLabel').getByText('Будівельна техніка');
     }
 
-    public get municipalCategory(): Locator { 
+    public get municipalCategory(): Locator {
         return this.page.getByTestId('firstCategoryLabel').getByText('Комунальна техніка');
     }
 
-    public get warehouseCategory(): Locator { 
+    public get warehouseCategory(): Locator {
         return this.page.getByTestId('firstCategoryLabel').getByText('Складська техніка');
+    }
+
+    public get searchResultsText(): Locator {
+        return this.page.locator('h1[class^="MapPagination_count"]');
+    }
+
+    public get listedAds(): Locator {
+        return this.page.locator('[class^="ListPagination_unitsListCards"]');
+    }
+
+    public get showAsMapBtn(): Locator {
+        return this.page.getByTestId('switch').getByRole('button');
+    }
+
+    public serviceFilter(name: string): Locator {
+        return this.filtersPanel.getByText(name, { exact: true });
+    }
+
+    public categoryFilter(testId: string): Locator {
+        return this.page.getByTestId(testId);
     }
 }
