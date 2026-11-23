@@ -32,6 +32,7 @@ export class LoginForm {
   public get invalidEmailError(): Locator {
     return this.root.getByText('Неправильний формат email або номера телефону');
   }
+
   public get invalidPasswordError(): Locator {
     return this.root.getByText(
       'Пароль повинен містити як мінімум 1 цифру, 1 велику літеру і 1 малу літеру, також не повинен містити кирилицю та пробіли',
@@ -42,38 +43,8 @@ export class LoginForm {
     return this.root.getByTestId('errorMessage');
   }
 
-  public get forgotPasswordLink(): Locator {
-    return this.root.getByText('Забули пароль?', { exact: true });
-  }
-
-  public get registerBtn(): Locator {
-    return this.root.getByTestId('switcher');
-  }
-
-  public get registrationCheckbox(): Locator {
-    return this.root.locator('#registration');
-  }
-
-  public get registerationBtn(): Locator {
-    return this.root.getByRole('button', { name: 'Зареєструватись' });
-  }
-
   public get closeLoginFormBtn(): Locator {
     return this.root.getByTestId('authClose');
-  }
-
-  public get restorePasswordField(): Locator {
-    return this.restorePassRoot.getByTestId('reactHookInput');
-  }
-
-  public get restorePasswordBtn(): Locator {
-    return this.restorePassRoot.getByRole('button', {
-      name: 'Відновити пароль',
-    });
-  }
-
-  public get restorePasswordCrossBtn(): Locator {
-    return this.restorePassRoot.getByTestId('restorePasswordCross');
   }
 
   async fillLoginForm(login: string, password: string): Promise<void> {
@@ -98,27 +69,5 @@ export class LoginForm {
     } else {
       await this.passwordField.press('Enter');
     }
-  }
-
-  async clickForgotPasswordLink(): Promise<void> {
-    await this.forgotPasswordLink.click();
-  }
-
-  async switchToRegistration(): Promise<void> {
-    await this.registerBtn.click();
-  }
-
-  async fillRestorePasswordForm(email: string): Promise<void> {
-    await this.restorePasswordField.fill(email);
-  }
-
-  async fillRegisterForm(login: string, password: string): Promise<void> {
-    await this.registrationCheckbox.check();
-    await this.loginField.fill(login);
-    await this.passwordField.fill(password);
-  }
-
-  async clickRegisterBtn(): Promise<void> {
-    await this.registerationBtn.click();
   }
 }
